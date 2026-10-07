@@ -1,0 +1,20 @@
+{
+  "short_name": "CANMABiz",
+  "name": "CANMABiz (PVT) LTD",
+  "icons": [
+    {
+      "src": "web-app-manifest-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "web-app-manifest-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#101010",
+  "background_color": "#ffffff"
+}

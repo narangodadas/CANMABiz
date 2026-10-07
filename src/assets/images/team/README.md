@@ -1,0 +1,1 @@
+Approved CANMABiz staff portraits are stored in `src/Images` and imported by `src/data/team.js`. Keep each portrait matched to its team member; do not add duplicate or placeholder images here.

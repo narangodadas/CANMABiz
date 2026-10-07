@@ -1,0 +1,1 @@
+Service illustrations currently use the existing monochrome icon library and CSS mockups. Add only approved CANMABiz service images here.

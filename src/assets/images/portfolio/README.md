@@ -1,0 +1,1 @@
+Add approved client/project images here and reference them from `src/data/portfolio.js`. Do not add inferred project descriptions or unapproved client marks.

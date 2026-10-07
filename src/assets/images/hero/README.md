@@ -1,0 +1,1 @@
+The homepage currently reuses the existing local hero photo from `src/Images/hero-img.webp`. Add an approved replacement here and update the hero background reference in `src/CanmaSite.css`.
