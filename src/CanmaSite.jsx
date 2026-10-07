@@ -380,7 +380,7 @@ function HeroFrameCanvas() {
     };
   }, []);
 
-  return <canvas className="#" ref={canvasRef} aria-hidden="true" />;
+  return <canvas className="hero-photo" ref={canvasRef} aria-hidden="true" />;
 }
 
 function HomePage() {
