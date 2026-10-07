@@ -550,8 +550,177 @@ function ContactPage() {
 }
 
 function LegalPage({ isPrivacy }) {
-  const title = isPrivacy ? 'Privacy Policy' : 'Terms & Conditions';
-  return <><PageHero eyebrow={`CANMABiz / ${title}`} title={title} description={`Information about ${isPrivacy ? 'privacy practices' : 'website terms'} will be published here when the company's approved policy is available.`} /><section className="legal-content wrap"><p className="eyebrow">Policy information</p><h2>Official wording to be added.</h2><p>This page is reserved for {company.legalName}’s approved {isPrivacy ? 'privacy policy' : 'terms and conditions'}. The detailed policy was not included in the materials provided, so no terms have been invented.</p><p>For enquiries, contact <a href={`mailto:${contact.email}`}>{contact.email}</a>.</p></section></>;
+  if (isPrivacy) {
+    return <>
+      <PageHero eyebrow="CANMABiz / Privacy" title="Privacy Policy" description="This Privacy Policy explains how CANMABiz (PVT) LTD collects, uses, protects and manages information in connection with our website, business services, and client communication." />
+      <section className="legal-content wrap">
+        <div className="legal-shell">
+          <div className="legal-callout">
+            <p className="eyebrow">Our commitment</p>
+            <h2>Information is treated with care.</h2>
+            <p>CANMABiz is committed to protecting the privacy of clients, website visitors, and business contacts. We collect only the information needed to respond to enquiries, provide services, and improve the experience on our website.</p>
+          </div>
+
+          <div className="legal-grid">
+            <article className="legal-card">
+              <p className="eyebrow">01 / Information we collect</p>
+              <ul className="legal-list">
+                <li>Contact information such as name, email address, phone number, and company name.</li>
+                <li>Business requirements and service enquiries submitted through our website or email.</li>
+                <li>Website analytics data including browser type, device, pages visited, and referring source.</li>
+                <li>Communication records related to projects, client support, and business discussions.</li>
+              </ul>
+            </article>
+
+            <article className="legal-card">
+              <p className="eyebrow">02 / How we use it</p>
+              <ul className="legal-list">
+                <li>Responding to service enquiries and project discussions.</li>
+                <li>Providing business consultation, digital marketing, website, and creative support.</li>
+                <li>Maintaining communication, scheduling, and project updates.</li>
+                <li>Improving our website experience and understanding business needs.</li>
+              </ul>
+            </article>
+
+            <article className="legal-card">
+              <p className="eyebrow">03 / Information sharing</p>
+              <ul className="legal-list">
+                <li>We do not sell personal information to third parties.</li>
+                <li>We may share information with trusted service providers only when required for communication, hosting, analytics, or service delivery.</li>
+                <li>Information may also be disclosed where required by law, professional obligations, or regulatory processes.</li>
+              </ul>
+            </article>
+
+            <article className="legal-card">
+              <p className="eyebrow">04 / Cookies and analytics</p>
+              <ul className="legal-list">
+                <li>We may use cookies and similar technologies to remember preferences and understand site performance.</li>
+                <li>Analytics tools help us evaluate traffic patterns and improve website usability.</li>
+                <li>Users can manage browser preferences to limit or disable cookies where applicable.</li>
+              </ul>
+            </article>
+
+            <article className="legal-card">
+              <p className="eyebrow">05 / Security and retention</p>
+              <ul className="legal-list">
+                <li>We implement reasonable security measures to protect information from unauthorised access, misuse, or disclosure.</li>
+                <li>Information is retained only for as long as required to fulfil business purposes, legal obligations, or client communication needs.</li>
+                <li>Where information is no longer needed, it will be securely deleted or anonymised when appropriate.</li>
+              </ul>
+            </article>
+
+            <article className="legal-card">
+              <p className="eyebrow">06 / Your rights</p>
+              <ul className="legal-list">
+                <li>Request access to personal information we hold about you.</li>
+                <li>Ask for correction or update of inaccurate personal information.</li>
+                <li>Request removal of information where retention is no longer necessary, subject to legal or contractual limitations.</li>
+                <li>Opt out of non-essential marketing communication where applicable.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div className="legal-summary">
+            <h3>Contact us</h3>
+            <p>If you have questions about this Privacy Policy or how your information is handled, please contact {company.legalName} at <a href={`mailto:${contact.email}`}>{contact.email}</a> or call <a href={`tel:${contact.phoneLink}`}>{contact.phone}</a>.</p>
+          </div>
+        </div>
+      </section>
+    </>;
+  }
+
+  return <>
+    <PageHero eyebrow="CANMABiz / Terms" title="Terms & Conditions" description="These Terms & Conditions govern the use of the CANMABiz website and the business relationship between CANMABiz (PVT) LTD and its clients and visitors." />
+    <section className="legal-content wrap">
+      <div className="legal-shell">
+        <div className="legal-callout">
+          <p className="eyebrow">Website use</p>
+          <h2>Clear terms for a professional relationship.</h2>
+          <p>By accessing or using the CANMABiz website, you agree to be bound by these terms. These terms apply to website visitors, prospective clients, and any parties interacting with CANMABiz for business, service, marketing, or production support.</p>
+        </div>
+
+        <div className="legal-grid">
+          <article className="legal-card">
+            <p className="eyebrow">01 / Acceptance of terms</p>
+            <ul className="legal-list">
+              <li>Use of this website indicates acceptance of these Terms & Conditions.</li>
+              <li>CANMABiz may update these terms at any time and continued use of the website indicates acceptance of the revised version.</li>
+              <li>Any service engagement is subject to a separate agreement, proposal, or statement of work where applicable.</li>
+            </ul>
+          </article>
+
+          <article className="legal-card">
+            <p className="eyebrow">02 / Service scope</p>
+            <ul className="legal-list">
+              <li>CANMABiz provides business solutions, digital marketing support, website services, and production services tailored to client needs.</li>
+              <li>Scope, deliverables, timelines, and responsibilities will be agreed in writing before work begins.</li>
+              <li>Requests for additional work outside the agreed scope may be charged separately.</li>
+            </ul>
+          </article>
+
+          <article className="legal-card">
+            <p className="eyebrow">03 / Client responsibilities</p>
+            <ul className="legal-list">
+              <li>Clients are responsible for providing accurate information, timely approvals, and access to required assets or platforms.</li>
+              <li>Delays caused by incomplete information, late feedback, or unavailable client resources are not the responsibility of CANMABiz.</li>
+              <li>Clients are expected to communicate clearly and respond within agreed timelines.</li>
+            </ul>
+          </article>
+
+          <article className="legal-card">
+            <p className="eyebrow">04 / Intellectual property</p>
+            <ul className="legal-list">
+              <li>CANMABiz retains ownership of its templates, frameworks, methods, and pre-existing materials used in service delivery.</li>
+              <li>Client-provided content, branding assets, and business information remain the property of the client unless otherwise agreed.</li>
+              <li>Final deliverables will be governed by the project agreement and any specific licensing or transfer terms agreed in writing.</li>
+            </ul>
+          </article>
+
+          <article className="legal-card">
+            <p className="eyebrow">05 / Payments and project delivery</p>
+            <ul className="legal-list">
+              <li>Project costs, payment milestones, and acceptance criteria will be clearly communicated before work starts.</li>
+              <li>Late payments may result in delays to work, suspension of services, or additional charges as agreed.</li>
+              <li>Client approval is required before final delivery or public release of content or assets where applicable.</li>
+            </ul>
+          </article>
+
+          <article className="legal-card">
+            <p className="eyebrow">06 / Confidentiality and data</p>
+            <ul className="legal-list">
+              <li>CANMABiz will handle confidential information responsibly and in line with applicable professional and legal standards.</li>
+              <li>Information shared by the client remains subject to the relevant project agreement and privacy expectations.</li>
+              <li>CANMABiz may not disclose confidential information except where required by law or with the client’s consent.</li>
+            </ul>
+          </article>
+
+          <article className="legal-card">
+            <p className="eyebrow">07 / Limitation of liability</p>
+            <ul className="legal-list">
+              <li>CANMABiz aims to provide quality professional services, but we do not guarantee outcomes beyond those explicitly agreed in writing.</li>
+              <li>We shall not be liable for indirect, incidental, or consequential losses arising from website use or business engagements, except where required by law.</li>
+              <li>Our aggregate liability is limited to the value of services directly related to the relevant engagement, subject to applicable legal limits.</li>
+            </ul>
+          </article>
+
+          <article className="legal-card">
+            <p className="eyebrow">08 / External links and content</p>
+            <ul className="legal-list">
+              <li>The website may contain links to external websites or third-party resources.</li>
+              <li>CANMABiz is not responsible for the content, privacy practices, or availability of external websites.</li>
+              <li>Visitors access external links at their own discretion and should review the relevant terms and policies of those third parties.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div className="legal-summary">
+          <h3>Governing law</h3>
+          <p>These Terms & Conditions are governed by the laws applicable to CANMABiz (PVT) LTD and the relevant jurisdiction in which the service or transaction is conducted. Any dispute arising in connection with website use or a service agreement will be addressed through good-faith discussions, and legal remedies may be pursued where required.</p>
+          <p>For enquiries, please contact <a href={`mailto:${contact.email}`}>{contact.email}</a> or call <a href={`tel:${contact.phoneLink}`}>{contact.phone}</a>.</p>
+        </div>
+      </div>
+    </section>
+  </>;
 }
 
 function NotFoundPage() {

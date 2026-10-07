@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.9357e914.css",
-    "main.js": "/static/js/main.65f6d6c8.js",
+    "main.css": "/static/css/main.282645ef.css",
+    "main.js": "/static/js/main.b4e91223.js",
     "static/js/453.bf09306d.chunk.js": "/static/js/453.bf09306d.chunk.js",
     "static/media/Shyni Dickson.png": "/static/media/Shyni Dickson.26050fdd217f944de622.png",
     "static/media/Chamathka Kumbukgolla.png": "/static/media/Chamathka Kumbukgolla.7d6bf26c8295082b836c.png",
@@ -331,12 +331,12 @@
     "static/media/ezgif-frame-043.jpg": "/static/media/ezgif-frame-043.9c4534db42646e2e1fe3.jpg",
     "static/media/ezgif-frame-035.jpg": "/static/media/ezgif-frame-035.df20cfb79872f44d85be.jpg",
     "index.html": "/index.html",
-    "main.9357e914.css.map": "/static/css/main.9357e914.css.map",
-    "main.65f6d6c8.js.map": "/static/js/main.65f6d6c8.js.map",
+    "main.282645ef.css.map": "/static/css/main.282645ef.css.map",
+    "main.b4e91223.js.map": "/static/js/main.b4e91223.js.map",
     "453.bf09306d.chunk.js.map": "/static/js/453.bf09306d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9357e914.css",
-    "static/js/main.65f6d6c8.js"
+    "static/css/main.282645ef.css",
+    "static/js/main.b4e91223.js"
   ]
 }
