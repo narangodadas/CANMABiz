@@ -38,10 +38,12 @@ import './CanmaSite.css';
 
 const contact = company;
 const navItems = navigation;
-const heroFrameContext = require.context('./Images/ezgif-2bfc8f583a817676-jpg', false, /^\.\/ezgif-frame-\d+\.jpg$/);
-const heroFrames = heroFrameContext.keys()
+const heroFrameContext = process.env.NODE_ENV === 'test'
+  ? null
+  : require.context('./Images/ezgif-2bfc8f583a817676-jpg', false, /^\.\/ezgif-frame-\d+\.jpg$/);
+const heroFrames = heroFrameContext ? heroFrameContext.keys()
   .sort((first, second) => Number(first.match(/\d+/)[0]) - Number(second.match(/\d+/)[0]))
-  .map((frame) => heroFrameContext(frame));
+  .map((frame) => heroFrameContext(frame)) : [];
 
 const pageMeta = {
   '/': ['CANMABiz (PVT) LTD | Professional Business Solutions', 'Business, digital marketing, website and creative production solutions for startups, SMEs and growing organisations.'],
@@ -213,6 +215,7 @@ function HeroFrameCanvas() {
     let targetFrame = 0;
     let renderedFrame = -1;
     let animationFrame = 0;
+    let scrollAnimationFrame = 0;
     let disposed = false;
 
     page.classList.add('home-scroll-animation');
@@ -321,13 +324,15 @@ function HeroFrameCanvas() {
       const footer = document.querySelector('.site-footer');
       if (!prefersReducedMotion && footer) {
         const footerTop = footer.getBoundingClientRect().top;
-        const bottomInset = Math.min(window.innerHeight, Math.max(0, window.innerHeight - Math.max(0, footerTop)));
+        const canvasHeight = canvas.getBoundingClientRect().height;
+        const bottomInset = Math.min(canvasHeight, Math.max(0, canvasHeight - Math.max(0, footerTop)));
         canvas.style.clipPath = `inset(0 0 ${bottomInset}px 0)`;
       } else {
         canvas.style.clipPath = 'none';
       }
-      const range = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = range > 0 ? Math.max(0, Math.min(1, window.scrollY / range)) : 0;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+      const pageBottom = page.getBoundingClientRect().bottom + scrollTop;
+      const progress = pageBottom > 0 ? Math.max(0, Math.min(1, scrollTop / pageBottom)) : 0;
       const nextFrame = prefersReducedMotion ? 0 : Math.round(progress * (heroFrames.length - 1));
       if (nextFrame !== targetFrame) {
         targetFrame = nextFrame;
@@ -337,18 +342,38 @@ function HeroFrameCanvas() {
       loadNearbyFrames(targetFrame);
     };
 
+    const scheduleScrollUpdate = () => {
+      if (scrollAnimationFrame || disposed) return;
+      scrollAnimationFrame = window.requestAnimationFrame(() => {
+        scrollAnimationFrame = 0;
+        updateFromScroll();
+      });
+    };
+
+    const handleViewportChange = () => {
+      updateFromScroll();
+      requestDraw();
+    };
+
+    const pageResizeObserver = typeof ResizeObserver === 'undefined'
+      ? null
+      : new ResizeObserver(scheduleScrollUpdate);
+    pageResizeObserver?.observe(page);
+
     loadNearbyFrames(0);
     updateFromScroll();
-    window.addEventListener('scroll', updateFromScroll, { passive: true });
-    window.addEventListener('resize', updateFromScroll);
-    reducedMotion.addEventListener('change', updateFromScroll);
+    window.addEventListener('scroll', scheduleScrollUpdate, { passive: true });
+    window.addEventListener('resize', handleViewportChange);
+    reducedMotion.addEventListener('change', handleViewportChange);
 
     return () => {
       disposed = true;
-      window.removeEventListener('scroll', updateFromScroll);
-      window.removeEventListener('resize', updateFromScroll);
-      reducedMotion.removeEventListener('change', updateFromScroll);
+      window.removeEventListener('scroll', scheduleScrollUpdate);
+      window.removeEventListener('resize', handleViewportChange);
+      reducedMotion.removeEventListener('change', handleViewportChange);
+      pageResizeObserver?.disconnect();
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      if (scrollAnimationFrame) window.cancelAnimationFrame(scrollAnimationFrame);
       page.classList.remove('home-scroll-animation');
       document.body.classList.remove('home-scroll-animation-active');
       delete page.dataset.reducedMotion;
