@@ -4,6 +4,9 @@ import App from './App';
 test('renders the CANMABiz homepage and service call to action', () => {
   render(<App />);
   expect(screen.getAllByRole('link', { name: 'CANMABiz home' })).toHaveLength(2);
+  expect(document.querySelector('.hero-team-background')).toBeInTheDocument();
+  expect(document.querySelector('.hero-team-frame')).not.toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'The CANMABiz team' })).toHaveClass('hero-team-background');
   expect(screen.getByRole('link', { name: /explore our services/i })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /let’s talk/i })).toBeInTheDocument();
 });

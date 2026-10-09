@@ -388,13 +388,17 @@ function HomePage() {
   return <>
     <section className="home-hero" id="top">
       <HeroFrameCanvas />
+      <div className="hero-team-background" role="img" aria-label="The CANMABiz team" />
       <div className="hero-shade" />
       <div className="wrap hero-content">
-        <p className="eyebrow">Professional business solutions</p>
-        <h1>Build better.<br /><span>Grow with clarity.</span><br /><span className="hero-third-line">Lead with purpose.</span></h1>
-        <p className="hero-copy">Business, digital and creative solutions shaped around the needs of your organisation.</p>
-        <div className="hero-actions"><Link className="button button-accent" to="/services">Explore our services <FiArrowUpRight /></Link><Link className="hero-secondary" to="/about">Discover CANMABiz <FiArrowRight /></Link></div>
-      </div>    </section>
+        <div className="hero-copy-block">
+          <p className="eyebrow">Professional business solutions</p>
+          <h1>Build better.<br /><span>Grow with clarity.</span><br /><span className="hero-third-line">Lead with purpose.</span></h1>
+          <p className="hero-copy">Business, digital and creative solutions shaped around the needs of your organisation.</p>
+          <div className="hero-actions"><Link className="button button-accent" to="/services">Explore our services <FiArrowUpRight /></Link><Link className="hero-secondary" to="/about">Discover CANMABiz <FiArrowRight /></Link></div>
+        </div>
+      </div>
+     </section>
     <section className="intro-section wrap" id="intro">
       <div className="intro-label"><span className="eyebrow">01 / Who we are</span><span className="intro-rule" /></div>
       <div className="intro-copy"><h2>A business partner for the work ahead.</h2><p>{company.legalName} provides professional, customised solutions to startups, SMEs, corporate organisations and growing businesses. We bring business guidance, digital expertise and creative production together, shaped to fit each organisation.</p><ActionLink to="/about">Discover CANMABiz</ActionLink></div>
