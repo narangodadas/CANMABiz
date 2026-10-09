@@ -69,7 +69,7 @@ test('opens the mobile menu and closes it after route selection', async () => {
   await waitFor(() => expect(screen.getByRole('button', { name: 'Open navigation menu' })).toHaveAttribute('aria-expanded', 'false'));
 });
 
-test('filters portfolio references and Knowledge Hub articles', () => {
+test('filters portfolio references and shows all five Knowledge Hub videos', () => {
   const { container } = render(<App />);
   const mainNavigation = within(screen.getByRole('navigation', { name: 'Main navigation' }));
 
@@ -79,10 +79,81 @@ test('filters portfolio references and Knowledge Hub articles', () => {
   expect(screen.getByRole('heading', { name: 'Angels Travels' })).toBeInTheDocument();
 
   fireEvent.click(mainNavigation.getByRole('link', { name: 'Knowledge Hub' }));
-  expect(container.querySelectorAll('.article-card')).toHaveLength(7);
-  fireEvent.click(screen.getByRole('button', { name: 'Technology' }));
-  expect(container.querySelectorAll('.article-card')).toHaveLength(1);
-  expect(screen.getByRole('heading', { name: /digital transformation for smes/i })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /ideas to move business forward/i })).toBeInTheDocument();
+  expect(screen.getByText('Home / Knowledge Hub')).toBeInTheDocument();
+  expect(document.querySelector('.knowledge-library')).toBeInTheDocument();
+  expect(container.querySelectorAll('.knowledge-video-card')).toHaveLength(5);
+  expect(container.querySelector('.knowledge-video-grid')).not.toHaveTextContent(/CANMABiz video|Video 0[1-5]/i);
+  expect(container.querySelectorAll('.knowledge-video-copy')).toHaveLength(0);
+  expect(Array.from(container.querySelectorAll('.knowledge-video-thumbnail img'), (image) => image.getAttribute('src'))).toEqual([
+    'https://img.youtube.com/vi/N1heT-v_eIQ/hqdefault.jpg',
+    'https://img.youtube.com/vi/kOCnf_QChg0/hqdefault.jpg',
+    'https://img.youtube.com/vi/wm8WsRaKFvU/hqdefault.jpg',
+    'https://img.youtube.com/vi/vKlkeL2F3ow/hqdefault.jpg',
+    'https://img.youtube.com/vi/yF-kTYBY_eY/hqdefault.jpg',
+  ]);
+});
+
+test('plays the selected video in an accessible modal and stops it on Escape', () => {
+  render(<App />);
+  fireEvent.click(within(screen.getByRole('navigation', { name: 'Main navigation' })).getByRole('link', { name: 'Knowledge Hub' }));
+
+  const videoButton = screen.getByRole('button', { name: 'Play Knowledge Hub video 3' });
+  videoButton.focus();
+  fireEvent.click(videoButton);
+
+  const modal = screen.getByRole('dialog', { name: 'Knowledge Hub video' });
+  expect(modal).toHaveAttribute('aria-modal', 'true');
+  expect(modal.querySelector('iframe')).toHaveAttribute(
+    'src',
+    'https://www.youtube-nocookie.com/embed/wm8WsRaKFvU?autoplay=1&playsinline=1&rel=0',
+  );
+  expect(document.body).toHaveStyle({ overflow: 'hidden' });
+  expect(screen.getByRole('link', { name: /open original video on youtube/i })).toHaveAttribute(
+    'href',
+    'https://youtu.be/wm8WsRaKFvU?si=VUxbYT-mx9i98sK-',
+  );
+
+  fireEvent.keyDown(window, { key: 'Escape' });
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  expect(document.querySelector('iframe')).not.toBeInTheDocument();
+  expect(document.body.style.overflow).toBe('');
+  expect(document.activeElement).toBe(videoButton);
+});
+
+test('keeps every supplied YouTube URL paired with its matching embedded video ID', () => {
+  render(<App />);
+  fireEvent.click(within(screen.getByRole('navigation', { name: 'Main navigation' })).getByRole('link', { name: 'Knowledge Hub' }));
+
+  const videos = [
+    ['N1heT-v_eIQ', 'https://youtu.be/N1heT-v_eIQ?si=-Vb6xbEyAj6zUMmm'],
+    ['kOCnf_QChg0', 'https://youtu.be/kOCnf_QChg0?si=HOfe4e8Fl3zpt-9i'],
+    ['wm8WsRaKFvU', 'https://youtu.be/wm8WsRaKFvU?si=VUxbYT-mx9i98sK-'],
+    ['vKlkeL2F3ow', 'https://youtu.be/vKlkeL2F3ow?si=oi91E8ZBFNwedAuQ'],
+    ['yF-kTYBY_eY', 'https://youtu.be/yF-kTYBY_eY?si=g_JSaex2pATEAFkZ'],
+  ];
+
+  videos.forEach(([id, youtubeUrl], index) => {
+    fireEvent.click(screen.getByRole('button', { name: `Play Knowledge Hub video ${index + 1}` }));
+    const modal = screen.getByRole('dialog');
+    expect(modal.querySelector('iframe')).toHaveAttribute(
+      'src',
+      `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0`,
+    );
+    expect(within(modal).getByRole('link', { name: /open original video on youtube/i })).toHaveAttribute('href', youtubeUrl);
+    fireEvent.keyDown(window, { key: 'Escape' });
+  });
+});
+
+test('uses an official alternate thumbnail when a video thumbnail is unavailable', () => {
+  render(<App />);
+  fireEvent.click(within(screen.getByRole('navigation', { name: 'Main navigation' })).getByRole('link', { name: 'Knowledge Hub' }));
+  const image = screen.getAllByRole('button', { name: /^play/i })[0].querySelector('img');
+
+  fireEvent.error(image);
+  expect(image).toHaveAttribute('src', 'https://img.youtube.com/vi/N1heT-v_eIQ/0.jpg');
+  fireEvent.error(image);
+  expect(image).not.toBeInTheDocument();
 });
 
 test('shows the supplied service overview and grouped digital marketing offerings', () => {

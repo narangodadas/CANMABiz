@@ -19,6 +19,7 @@ import {
   FiMenu,
   FiMonitor,
   FiPhone,
+  FiPlay,
   FiTarget,
   FiX,
 } from 'react-icons/fi';
@@ -31,7 +32,7 @@ import { industries } from './data/industries';
 import { navigation } from './data/navigation';
 import { teamMembers } from './data/team';
 import { testimonials } from './data/testimonials';
-import { articleCategories, articles } from './data/blog';
+import { knowledgeHubVideos } from './data/knowledgeHubVideos';
 import TeamCard from './Components/TeamCard';
 import headerLogo from './Images/Logonew.png';
 import './CanmaSite.css';
@@ -541,15 +542,154 @@ function ReviewsPage() {
   </>;
 }
 
-function ArticleCard({ article }) {
-  return <article className="article-card"><div className="article-card-top"><span>{article.category}</span><FiArrowUpRight aria-hidden="true" /></div><h2>{article.title}</h2><p>{article.excerpt}</p><div className="article-card-meta"><span>{article.author}</span><span>{article.date}</span><span>{article.readMinutes} min read</span></div></article>;
+const isValidYoutubeId = (id) => /^[\w-]{11}$/.test(id);
+
+function KnowledgeVideoCard({ video, index, onSelect }) {
+  const fallbackTitle = `Knowledge Hub video ${index + 1}`;
+  const title = video.title.trim() || fallbackTitle;
+  const [thumbnail, setThumbnail] = useState(
+    isValidYoutubeId(video.id) ? `https://img.youtube.com/vi/${video.id}/hqdefault.jpg` : '',
+  );
+  const [thumbnailFailed, setThumbnailFailed] = useState(false);
+
+  const handleThumbnailError = () => {
+    if (thumbnail && !thumbnail.endsWith('/0.jpg')) {
+      setThumbnail(`https://img.youtube.com/vi/${video.id}/0.jpg`);
+      return;
+    }
+    setThumbnailFailed(true);
+  };
+
+  return (
+    <article className="knowledge-video-card">
+      <button
+        className="knowledge-video-trigger"
+        type="button"
+        onClick={(event) => onSelect(video, event.currentTarget)}
+        aria-label={`Play ${title}`}
+      >
+        <span className="knowledge-video-thumbnail">
+          {thumbnail && !thumbnailFailed
+            ? <img src={thumbnail} alt="" loading="lazy" onError={handleThumbnailError} />
+            : <span className="knowledge-video-thumbnail-fallback" aria-hidden="true"><FiFilm /></span>}
+          <span className="knowledge-video-play" aria-hidden="true"><FiPlay /></span>
+        </span>
+      </button>
+    </article>
+  );
+}
+
+function KnowledgeVideoModal({ video, onClose, closeButtonRef, triggerRef }) {
+  const [embedFailed, setEmbedFailed] = useState(!isValidYoutubeId(video.id));
+  const title = video.title.trim() || 'Knowledge Hub video';
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    const previousActiveElement = document.activeElement;
+    const focusedTrigger = triggerRef.current;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+      }
+      if (event.key !== 'Tab') return;
+
+      const modal = document.querySelector('.knowledge-video-dialog');
+      const focusable = modal?.querySelectorAll('button, a[href], iframe');
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+      if (focusedTrigger?.isConnected) focusedTrigger.focus();
+      else if (previousActiveElement instanceof HTMLElement) previousActiveElement.focus();
+    };
+  }, [closeButtonRef, onClose, triggerRef]);
+
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&playsinline=1&rel=0`;
+
+  return (
+    <div
+      className="knowledge-video-backdrop"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <section className="knowledge-video-dialog" role="dialog" aria-modal="true" aria-labelledby="knowledge-video-title">
+        <div className="knowledge-video-dialog-heading">
+          <div>
+            <span className="knowledge-video-category">CANMABiz / Knowledge Hub</span>
+            <h2 id="knowledge-video-title">{title}</h2>
+          </div>
+          <button ref={closeButtonRef} className="knowledge-video-close" type="button" onClick={onClose} aria-label="Close video">
+            <FiX aria-hidden="true" />
+          </button>
+        </div>
+        <div className="knowledge-video-player">
+          {embedFailed
+            ? <div className="knowledge-video-unavailable" role="status"><FiFilm aria-hidden="true" /><p>The video player could not be loaded. You can still watch this video on YouTube.</p></div>
+            : <iframe
+              src={embedUrl}
+              title={`${title} video player`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              onError={() => setEmbedFailed(true)}
+            />}
+        </div>
+        <p className="knowledge-video-help">If playback is unavailable, continue watching on YouTube.</p>
+        <a className="knowledge-video-youtube-link" href={video.youtubeUrl} target="_blank" rel="noreferrer">
+          Open original video on YouTube <FiArrowUpRight aria-hidden="true" />
+        </a>
+      </section>
+    </div>
+  );
 }
 
 function KnowledgeHubPage() {
-  const [category, setCategory] = useState('All');
-  const visibleArticles = category === 'All' ? articles : articles.filter((article) => article.category === category);
-  return <><PageHero eyebrow="Ideas for business" title={<>Knowledge for<br />what comes next.</>} description="Business, marketing, technology and growth articles published on the CANMABiz website." />
-    <section className="knowledge-section"><div className="wrap"><div className="knowledge-lead"><div><p className="eyebrow">Knowledge Hub</p><h2>Useful thinking.<br />Grounded in practice.</h2></div><p>Browse articles attributed to CANMABiz team members. Article cards link to source metadata only where a destination is available.</p></div><div className="article-filters" role="group" aria-label="Filter articles by topic">{['All', ...articleCategories].map((topic) => <button key={topic} className={category === topic ? 'article-filter active' : 'article-filter'} onClick={() => setCategory(topic)} aria-pressed={category === topic}>{topic}</button>)}</div>{visibleArticles.length ? <div className="article-grid">{visibleArticles.map((article) => <ArticleCard key={article.id} article={article} />)}</div> : <div className="knowledge-empty"><div className="knowledge-empty-art"><span>IDEAS</span><FiCompass /></div><div><span className="eyebrow">{category}</span><h3>More perspectives in this topic soon.</h3><p>No articles are currently listed in this topic. Browse the published business and growth articles instead.</p><button className="article-filter active" onClick={() => setCategory('All')}>Show all articles <FiArrowUpRight /></button></div></div>}</div></section><CTA title="Looking for support right now?" description="Explore the services CANMABiz can tailor to your organisation." />
+  const [activeVideo, setActiveVideo] = useState(null);
+  const closeButtonRef = useRef(null);
+  const triggerRef = useRef(null);
+
+  const selectVideo = (video, trigger) => {
+    triggerRef.current = trigger;
+    setActiveVideo(video);
+  };
+  const closeVideo = () => setActiveVideo(null);
+
+  return <>
+    <PageHero
+      eyebrow="CANMABiz / Knowledge Hub"
+      title={<>Ideas To Move<br />Business Forward.</>}
+      description="Explore practical insights, perspectives and stories from CANMABiz — curated to help ambitious businesses think clearly and grow with confidence."
+      breadcrumb="Home / Knowledge Hub"
+    />
+    <section className="knowledge-library">
+      <div className="wrap knowledge-library-content">
+        <div className="knowledge-library-meta"><span><i aria-hidden="true" />Official CANMABiz videos</span><span>{String(knowledgeHubVideos.length).padStart(2, '0')} films</span></div>
+        <div className="knowledge-video-grid" aria-label="CANMABiz video library">
+          {knowledgeHubVideos.map((video, index) => (
+            <KnowledgeVideoCard key={video.id} video={video} index={index} onSelect={selectVideo} />
+          ))}
+        </div>
+      </div>
+    </section>
+    <CTA title="Looking for support right now?" description="Explore the services CANMABiz can tailor to your organisation." />
+    {activeVideo && <KnowledgeVideoModal video={activeVideo} onClose={closeVideo} closeButtonRef={closeButtonRef} triggerRef={triggerRef} />}
   </>;
 }
 
