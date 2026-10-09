@@ -83,6 +83,8 @@ test('filters portfolio references and shows all five Knowledge Hub videos', () 
 
   fireEvent.click(mainNavigation.getByRole('link', { name: 'Knowledge Hub' }));
   expect(screen.getByRole('heading', { name: /ideas to move business forward/i })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Knowledge you can put to work.' })).toBeInTheDocument();
+  expect(screen.getByText(/useful insights and practical lessons from canmabiz videos/i)).toBeInTheDocument();
   expect(screen.getByText('Home / Knowledge Hub')).toBeInTheDocument();
   expect(document.querySelector('.knowledge-library')).toBeInTheDocument();
   expect(container.querySelectorAll('.knowledge-video-card')).toHaveLength(5);
@@ -157,6 +159,32 @@ test('uses an official alternate thumbnail when a video thumbnail is unavailable
   expect(image).toHaveAttribute('src', 'https://img.youtube.com/vi/N1heT-v_eIQ/0.jpg');
   fireEvent.error(image);
   expect(image).not.toBeInTheDocument();
+});
+
+test('opens the CANMABiz work gallery and browses images in an accessible lightbox', () => {
+  render(<App />);
+  fireEvent.click(within(screen.getByRole('navigation', { name: 'Main navigation' })).getByRole('link', { name: 'Knowledge Hub' }));
+  fireEvent.click(screen.getByRole('tab', { name: /our work/i }));
+
+  const workCards = screen.getAllByRole('button', { name: /^view work image/i });
+  expect(workCards).toHaveLength(15);
+  expect(screen.getByRole('heading', { name: 'Our work, in pictures.' })).toBeInTheDocument();
+
+  workCards[0].focus();
+  fireEvent.click(workCards[0]);
+  let dialog = screen.getByRole('dialog', { name: 'Work image 01' });
+  expect(dialog.querySelector('img')).toHaveAttribute('alt', 'CANMABiz work image 01');
+  expect(document.body).toHaveStyle({ overflow: 'hidden' });
+
+  fireEvent.click(within(dialog).getByRole('button', { name: 'Next work image' }));
+  dialog = screen.getByRole('dialog', { name: 'Work image 02' });
+  fireEvent.keyDown(window, { key: 'ArrowLeft' });
+  dialog = screen.getByRole('dialog', { name: 'Work image 01' });
+  fireEvent.keyDown(window, { key: 'Escape' });
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  expect(document.body.style.overflow).toBe('');
+  expect(document.activeElement).toBe(workCards[0]);
 });
 
 test('shows the supplied service overview and grouped digital marketing offerings', () => {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import {
   FiArrowDownRight,
@@ -7,9 +7,12 @@ import {
   FiBriefcase,
   FiCheck,
   FiCheckCircle,
+  FiChevronLeft,
+  FiChevronRight,
   FiCpu,
   FiCompass,
   FiFilm,
+  FiFolder,
   FiGitBranch,
   FiGlobe,
   FiLayers,
@@ -33,6 +36,7 @@ import { navigation } from './data/navigation';
 import { teamMembers } from './data/team';
 import { testimonials } from './data/testimonials';
 import { knowledgeHubVideos } from './data/knowledgeHubVideos';
+import { knowledgeHubWorkImages } from './data/knowledgeHubWorkImages';
 import TeamCard from './Components/TeamCard';
 import headerLogo from './Images/Logonew.png';
 import './CanmaSite.css';
@@ -664,8 +668,117 @@ function KnowledgeVideoModal({ video, onClose, closeButtonRef, triggerRef }) {
   );
 }
 
+function KnowledgeWorkGallery({ onSelect }) {
+  return (
+    <div className="knowledge-work-grid" aria-label="CANMABiz work image gallery">
+      {knowledgeHubWorkImages.map((work, index) => (
+        <button
+          className="knowledge-work-card"
+          key={work.label}
+          type="button"
+          onClick={(event) => onSelect(index, event.currentTarget)}
+          aria-label={`View ${work.label}`}
+        >
+          <span className="knowledge-work-image">
+            <img src={work.image} alt="" loading="lazy" />
+            <span className="knowledge-work-view" aria-hidden="true"><FiArrowUpRight /></span>
+          </span>
+          <span className="knowledge-work-label">{work.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function KnowledgeWorkModal({ index, onClose, onNavigate, closeButtonRef, triggerRef }) {
+  const work = knowledgeHubWorkImages[index];
+  const activeIndexRef = useRef(index);
+  activeIndexRef.current = index;
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    const previousActiveElement = document.activeElement;
+    const focusedTrigger = triggerRef.current;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        onNavigate((activeIndexRef.current - 1 + knowledgeHubWorkImages.length) % knowledgeHubWorkImages.length);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        onNavigate((activeIndexRef.current + 1) % knowledgeHubWorkImages.length);
+      } else if (event.key === 'Tab') {
+        const dialog = document.querySelector('.knowledge-work-dialog');
+        const focusable = dialog?.querySelectorAll('button');
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+      if (focusedTrigger?.isConnected) focusedTrigger.focus();
+      else if (previousActiveElement instanceof HTMLElement) previousActiveElement.focus();
+    };
+  }, [closeButtonRef, onClose, onNavigate, triggerRef]);
+
+  return (
+    <div
+      className="knowledge-work-backdrop"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <section className="knowledge-work-dialog" role="dialog" aria-modal="true" aria-label={work.label}>
+        <div className="knowledge-work-dialog-top">
+          <span>{work.label} <i aria-hidden="true" /> {String(index + 1).padStart(2, '0')} / {String(knowledgeHubWorkImages.length).padStart(2, '0')}</span>
+          <button ref={closeButtonRef} className="knowledge-video-close" type="button" onClick={onClose} aria-label="Close work image">
+            <FiX aria-hidden="true" />
+          </button>
+        </div>
+        <div className="knowledge-work-viewer">
+          <button
+            className="knowledge-work-navigation previous"
+            type="button"
+            aria-label="Previous work image"
+            onClick={() => onNavigate((index - 1 + knowledgeHubWorkImages.length) % knowledgeHubWorkImages.length)}
+          >
+            <FiChevronLeft aria-hidden="true" />
+          </button>
+          <img src={work.image} alt={`CANMABiz ${work.label.toLowerCase()}`} />
+          <button
+            className="knowledge-work-navigation next"
+            type="button"
+            aria-label="Next work image"
+            onClick={() => onNavigate((index + 1) % knowledgeHubWorkImages.length)}
+          >
+            <FiChevronRight aria-hidden="true" />
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function KnowledgeHubPage() {
+  const [activeCollection, setActiveCollection] = useState('videos');
   const [activeVideo, setActiveVideo] = useState(null);
+  const [activeWorkIndex, setActiveWorkIndex] = useState(null);
   const closeButtonRef = useRef(null);
   const triggerRef = useRef(null);
 
@@ -674,6 +787,11 @@ function KnowledgeHubPage() {
     setActiveVideo(video);
   };
   const closeVideo = () => setActiveVideo(null);
+  const selectWork = (index, trigger) => {
+    triggerRef.current = trigger;
+    setActiveWorkIndex(index);
+  };
+  const closeWork = useCallback(() => setActiveWorkIndex(null), []);
 
   return <>
     <PageHero
@@ -684,16 +802,71 @@ function KnowledgeHubPage() {
     />
     <section className="knowledge-library">
       <div className="wrap knowledge-library-content">
-        <div className="knowledge-library-meta"><span><i aria-hidden="true" />Official CANMABiz videos</span><span>{String(knowledgeHubVideos.length).padStart(2, '0')} films</span></div>
-        <div className="knowledge-video-grid" aria-label="CANMABiz video library">
-          {knowledgeHubVideos.map((video, index) => (
-            <KnowledgeVideoCard key={video.id} video={video} index={index} onSelect={selectVideo} />
-          ))}
+        <div className="knowledge-collection-switch" role="tablist" aria-label="Knowledge Hub collections">
+          <button
+            id="knowledge-videos-tab"
+            className={activeCollection === 'videos' ? 'knowledge-collection-tab active' : 'knowledge-collection-tab'}
+            type="button"
+            role="tab"
+            aria-selected={activeCollection === 'videos'}
+            tabIndex={activeCollection === 'videos' ? 0 : -1}
+            aria-controls="knowledge-collection-panel"
+            onClick={() => setActiveCollection('videos')}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                setActiveCollection('work');
+                document.getElementById('knowledge-work-tab')?.focus();
+              }
+            }}
+          >
+            <FiFilm aria-hidden="true" /> Videos <span>{String(knowledgeHubVideos.length).padStart(2, '0')}</span>
+          </button>
+          <button
+            id="knowledge-work-tab"
+            className={activeCollection === 'work' ? 'knowledge-collection-tab active' : 'knowledge-collection-tab'}
+            type="button"
+            role="tab"
+            aria-selected={activeCollection === 'work'}
+            tabIndex={activeCollection === 'work' ? 0 : -1}
+            aria-controls="knowledge-collection-panel"
+            onClick={() => setActiveCollection('work')}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                setActiveCollection('videos');
+                document.getElementById('knowledge-videos-tab')?.focus();
+              }
+            }}
+          >
+            <FiFolder aria-hidden="true" /> Our Work <span>{String(knowledgeHubWorkImages.length).padStart(2, '0')}</span>
+          </button>
+        </div>
+        <div id="knowledge-collection-panel" role="tabpanel" aria-labelledby={activeCollection === 'videos' ? 'knowledge-videos-tab' : 'knowledge-work-tab'}>
+          {activeCollection === 'videos' ? <>
+            <div className="knowledge-work-heading">
+              <div><span className="knowledge-work-eyebrow"><FiFilm aria-hidden="true" /> CANMABiz / Knowledge Library</span><h2>Knowledge you can put to work.</h2><p>Discover useful insights and practical lessons from CANMABiz videos—ideas you can take away and apply to your business.</p></div>
+              <span className="knowledge-work-total">{String(knowledgeHubVideos.length).padStart(2, '0')} videos</span>
+            </div>
+            <div className="knowledge-library-meta"><span><i aria-hidden="true" />Official CANMABiz videos</span><span>{String(knowledgeHubVideos.length).padStart(2, '0')} films</span></div>
+            <div className="knowledge-video-grid" aria-label="CANMABiz video library">
+              {knowledgeHubVideos.map((video, index) => (
+                <KnowledgeVideoCard key={video.id} video={video} index={index} onSelect={selectVideo} />
+              ))}
+            </div>
+          </> : <>
+            <div className="knowledge-work-heading">
+              <div><span className="knowledge-work-eyebrow"><FiFolder aria-hidden="true" /> CANMABiz / Work Gallery</span><h2>Our work, in pictures.</h2><p>Browse moments and projects from the CANMABiz work collection.</p></div>
+              <span className="knowledge-work-total">{String(knowledgeHubWorkImages.length).padStart(2, '0')} images</span>
+            </div>
+            <KnowledgeWorkGallery onSelect={selectWork} />
+          </>}
         </div>
       </div>
     </section>
     <CTA title="Looking for support right now?" description="Explore the services CANMABiz can tailor to your organisation." />
     {activeVideo && <KnowledgeVideoModal video={activeVideo} onClose={closeVideo} closeButtonRef={closeButtonRef} triggerRef={triggerRef} />}
+    {activeWorkIndex !== null && <KnowledgeWorkModal index={activeWorkIndex} onClose={closeWork} onNavigate={setActiveWorkIndex} closeButtonRef={closeButtonRef} triggerRef={triggerRef} />}
   </>;
 }
 
