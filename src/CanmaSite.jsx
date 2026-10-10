@@ -56,7 +56,7 @@ const pageMeta = {
   '/services': ['Services | CANMABiz', 'Explore CANMABiz business solutions, digital marketing, website services and creative production.'],
   '/business-solutions': ['Business Solutions | CANMABiz', 'Business consultation, financial guidance, HR support, SOP development and more.'],
   '/digital-marketing': ['Digital Marketing | CANMABiz', 'Social media management and digital advertising services for businesses.'],
-  '/website-solutions': ['Website Solutions | CANMABiz', 'Corporate websites, business websites, landing pages, maintenance and basic SEO.'],
+  '/website-solutions': ['Software Solutions | CANMABiz', 'Professional website and software solutions, including custom system development, business applications, website design, support and optimization.'],
   '/production': ['CANMABiz Production | Creative Services', 'Photography, video, graphic design and promotional production services.'],
   '/portfolio': ['Portfolio | CANMABiz', 'Businesses referenced in the CANMABiz business proposal.'],
   '/industries': ['Industries | CANMABiz', 'Business solutions for organisations across a range of industries.'],
@@ -534,8 +534,8 @@ function WhyUsPage() {
 
 function TeamPage() {
   return <><PageHero eyebrow="The people behind the work" title={<>Meet the people<br />behind CANMABiz.</>} description="The people bringing our business, finance, operations, technology and creative work together." />
-    <section className="team-intro"><div className="wrap team-intro-grid"><p className="eyebrow">People &amp; expertise</p><div><h2>Different disciplines.<br />One shared purpose.</h2><p>Meet the people behind CANMABiz and the expertise they bring to every part of our work.</p></div><span className="team-count">{String(teamMembers.length).padStart(2, '0')}<small>team members</small></span></div></section>
-    <section className="team-group"><div className="wrap"><div className="team-group-heading"><div><p className="eyebrow">CANMABiz / Our people</p><h2>Our Team</h2></div><span>{String(teamMembers.length).padStart(2, '0')} people</span></div><div className="team-grid">{teamMembers.map((member) => <TeamCard member={member} key={member.id} />)}</div></div></section>
+    <section className="team-intro"><div className="wrap team-intro-grid"><p className="eyebrow">People &amp; expertise</p><div><h2>Different disciplines.<br />One shared purpose.</h2><p>Meet the people behind CANMABiz and the expertise they bring to every part of our work.</p></div></div></section>
+    <section className="team-group"><div className="wrap"><div className="team-group-heading"><div><p className="eyebrow">CANMABiz / Our people</p><h2>Our Team</h2></div></div><div className="team-grid">{teamMembers.map((member) => <TeamCard member={member} key={member.id} />)}</div></div></section>
     <CTA title="Work with our team" description="Talk with CANMABiz about the business support your organisation needs." />
   </>;
 }
@@ -820,7 +820,7 @@ function KnowledgeHubPage() {
               }
             }}
           >
-            <FiFilm aria-hidden="true" /> Videos <span>{String(knowledgeHubVideos.length).padStart(2, '0')}</span>
+            <FiFilm aria-hidden="true" /> Videos 
           </button>
           <button
             id="knowledge-work-tab"
@@ -839,16 +839,15 @@ function KnowledgeHubPage() {
               }
             }}
           >
-            <FiFolder aria-hidden="true" /> Our Work <span>{String(knowledgeHubWorkImages.length).padStart(2, '0')}</span>
+            <FiFolder aria-hidden="true" /> Our Work
           </button>
         </div>
         <div id="knowledge-collection-panel" role="tabpanel" aria-labelledby={activeCollection === 'videos' ? 'knowledge-videos-tab' : 'knowledge-work-tab'}>
           {activeCollection === 'videos' ? <>
             <div className="knowledge-work-heading">
               <div><span className="knowledge-work-eyebrow"><FiFilm aria-hidden="true" /> CANMABiz / Knowledge Library</span><h2>Knowledge you can put to work.</h2><p>Discover useful insights and practical lessons from CANMABiz videos—ideas you can take away and apply to your business.</p></div>
-              <span className="knowledge-work-total">{String(knowledgeHubVideos.length).padStart(2, '0')} videos</span>
             </div>
-            <div className="knowledge-library-meta"><span><i aria-hidden="true" />Official CANMABiz videos</span><span>{String(knowledgeHubVideos.length).padStart(2, '0')} films</span></div>
+            <div className="knowledge-library-meta"><span><i aria-hidden="true" />Official CANMABiz videos</span></div>
             <div className="knowledge-video-grid" aria-label="CANMABiz video library">
               {knowledgeHubVideos.map((video, index) => (
                 <KnowledgeVideoCard key={video.id} video={video} index={index} onSelect={selectVideo} />
@@ -857,7 +856,6 @@ function KnowledgeHubPage() {
           </> : <>
             <div className="knowledge-work-heading">
               <div><span className="knowledge-work-eyebrow"><FiFolder aria-hidden="true" /> CANMABiz / Work Gallery</span><h2>Our work, in pictures.</h2><p>Browse moments and projects from the CANMABiz work collection.</p></div>
-              <span className="knowledge-work-total">{String(knowledgeHubWorkImages.length).padStart(2, '0')} images</span>
             </div>
             <KnowledgeWorkGallery onSelect={selectWork} />
           </>}

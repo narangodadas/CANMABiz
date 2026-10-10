@@ -51,14 +51,15 @@ export const services = [
   },
   {
     number: '03',
-    title: 'Website Solutions',
+    title: 'Software Solutions',
     path: '/website-solutions',
     icon: FiMonitor,
     accent: 'cyan',
-    description: 'Website solutions designed to strengthen your online presence and support your business goals.',
+    description: 'Professional software and website solutions designed to strengthen your digital presence and support your business growth.',
     items: [
-      'Corporate Website Development', 'Business Website Design', 'Landing Page Development',
-      'Website Maintenance & Updates', 'Basic SEO Optimization',
+      'Corporate Website Development', 'Business Website Design & Development', 'Landing Page Design & Development',
+      'Custom System Development', 'Business Application Development', 'Website Maintenance & Updates',
+      'Website Support & Enhancements', 'Basic SEO Optimization',
     ],
   },
   {
