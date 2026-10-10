@@ -71,7 +71,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .home-hero { position: relative; min-height: 650px; height: min(760px, calc(100svh - 82px)); max-height: 850px; overflow: hidden; background: radial-gradient(circle at top left, rgba(47,107,255,0.24), transparent 32%), linear-gradient(120deg, #0a0d12 0%, #121925 44%, #0b1118 100%); color: #fff; }
 .hero-photo { position: absolute; inset: 0; background-image: url('./Images/hero-img.webp'); background-position: center 44%; background-size: cover; filter: grayscale(1) contrast(1.08); opacity: .64; }
 .hero-team-background { position: absolute; z-index: 0; inset: 0; overflow: hidden; background: #080b10; }
-.hero-team-background::before { position: absolute; inset: 0; background: url('./Images/TeamNew.png') right center / auto 100% no-repeat; content: ''; opacity: .48; }
+.hero-team-background::before { position: absolute; inset: 0; background: url('./Images/TeamNew.png') right center / auto 100% no-repeat; content: ''; opacity: .90; }
 .hero-shade { position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.58) 45%, rgba(0,0,0,.2) 100%); }
 .hero-content { position: relative; z-index: 2; height: 100%; padding-top: clamp(70px, 9vh, 110px); padding-bottom: 58px; display: flex; align-items: center; }
 .hero-copy-block { width: min(100%, 850px); min-width: 0; }

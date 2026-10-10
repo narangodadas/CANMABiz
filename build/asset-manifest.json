@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.282645ef.css",
-    "main.js": "/static/js/main.b4e91223.js",
+    "main.css": "/static/css/main.3e4e45a7.css",
+    "main.js": "/static/js/main.53ce961a.js",
     "static/js/453.bf09306d.chunk.js": "/static/js/453.bf09306d.chunk.js",
     "static/media/Shyni Dickson.png": "/static/media/Shyni Dickson.26050fdd217f944de622.png",
     "static/media/Chamathka Kumbukgolla.png": "/static/media/Chamathka Kumbukgolla.7d6bf26c8295082b836c.png",
@@ -28,7 +28,23 @@
     "static/media/Golder Green Plantation.png": "/static/media/Golder Green Plantation.6cf16268be39dbf63f71.png",
     "static/media/Angel Travels.png": "/static/media/Angel Travels.605a829ef5e6d0e4dedd.png",
     "static/media/Serendib Garments.png": "/static/media/Serendib Garments.3cd064a32f7651e54764.png",
+    "static/media/TeamNew.png": "/static/media/TeamNew.8c44a0da4fe0b47a9b78.png",
+    "static/media/Image07.jpeg": "/static/media/Image07.a7c394bb81bff4133aec.jpeg",
+    "static/media/Image05.jpeg": "/static/media/Image05.182c36bd71c209b9c27b.jpeg",
+    "static/media/Image06.jpeg": "/static/media/Image06.7b7f6e9987c206b1830b.jpeg",
     "static/media/hero-img.webp": "/static/media/hero-img.9751bd235b7e97031662.webp",
+    "static/media/Image03.jpeg": "/static/media/Image03.2f51cad53ee03c4e35f3.jpeg",
+    "static/media/Image09.jpeg": "/static/media/Image09.3091acfc41acbfdd7484.jpeg",
+    "static/media/Image11.jpeg": "/static/media/Image11.e4e07931788d7dbc5a55.jpeg",
+    "static/media/Image01.jpeg": "/static/media/Image01.2445125e5911a7c02c69.jpeg",
+    "static/media/Image12.jpeg": "/static/media/Image12.01fe58eca6dd4bd9b9fb.jpeg",
+    "static/media/Image14.jpeg": "/static/media/Image14.d4d544e6356f3b42978c.jpeg",
+    "static/media/Image04.jpeg": "/static/media/Image04.82a71fc1a0835788da74.jpeg",
+    "static/media/Image13.jpeg": "/static/media/Image13.c5b52dad80fbadea8529.jpeg",
+    "static/media/Image10.jpeg": "/static/media/Image10.b0ce581798dd1e8fa451.jpeg",
+    "static/media/Image08.jpeg": "/static/media/Image08.b6c69ec53975f1e53525.jpeg",
+    "static/media/Image02.jpeg": "/static/media/Image02.ea3a7bf29b9ae1177e7a.jpeg",
+    "static/media/Image15.jpeg": "/static/media/Image15.4e0386b959c5e0d32b41.jpeg",
     "static/media/ezgif-frame-003.jpg": "/static/media/ezgif-frame-003.22dca909dc282e66dc4a.jpg",
     "static/media/ezgif-frame-004.jpg": "/static/media/ezgif-frame-004.4c4087be3c5394369236.jpg",
     "static/media/ezgif-frame-002.jpg": "/static/media/ezgif-frame-002.307a2c3020d956567012.jpg",
@@ -331,12 +347,12 @@
     "static/media/ezgif-frame-043.jpg": "/static/media/ezgif-frame-043.9c4534db42646e2e1fe3.jpg",
     "static/media/ezgif-frame-035.jpg": "/static/media/ezgif-frame-035.df20cfb79872f44d85be.jpg",
     "index.html": "/index.html",
-    "main.282645ef.css.map": "/static/css/main.282645ef.css.map",
-    "main.b4e91223.js.map": "/static/js/main.b4e91223.js.map",
+    "main.3e4e45a7.css.map": "/static/css/main.3e4e45a7.css.map",
+    "main.53ce961a.js.map": "/static/js/main.53ce961a.js.map",
     "453.bf09306d.chunk.js.map": "/static/js/453.bf09306d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.282645ef.css",
-    "static/js/main.b4e91223.js"
+    "static/css/main.3e4e45a7.css",
+    "static/js/main.53ce961a.js"
   ]
 }

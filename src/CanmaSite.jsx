@@ -500,7 +500,7 @@ function PortfolioPage() {
 function IndustriesPage() {
   const icons = [FiLayers, FiGlobe, FiCompass, FiBriefcase, FiTarget, FiMonitor, FiArrowDownRight];
   return <><PageHero eyebrow="Experience / Industries" title={<>Different industries.<br />Solutions that fit.</>} description="CANMABiz works with businesses across a range of sectors, adapting its support to the needs of each organisation." />
-    <section className="industries-page section-pad"><div className="wrap"><div className="industry-card-grid">{industries.map((industry, index) => { const Icon = icons[index]; return <article className="industry-card" key={industry}><div><span>0{index + 1}</span><Icon /></div><h2>{industry}</h2><p>Customised business support shaped around the sector and organisation.</p></article>; })}</div><p className="editor-note">Additional sectors can be added as confirmed.</p></div></section><CTA />
+    <section className="industries-page section-pad"><div className="wrap"><div className="industry-card-grid">{industries.map((industry, index) => { const Icon = icons[index]; return <article className="industry-card" key={industry}><div><span>0{index + 1}</span><Icon /></div><h2>{industry}</h2><p>Customised business support shaped around the sector and organisation.</p></article>; })}</div></div></section><CTA />
   </>;
 }
 
