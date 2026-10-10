@@ -7,6 +7,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: canmabiz-production
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,6 +30,9 @@ jobs:
 
       - name: Build React Website
         run: npm run build
+
+      - name: Verify Build Directory
+        run: test -f build/index.html
 
       - name: Deploy Website via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
