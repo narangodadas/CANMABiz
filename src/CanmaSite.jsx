@@ -677,13 +677,12 @@ function KnowledgeWorkGallery({ onSelect }) {
           key={work.label}
           type="button"
           onClick={(event) => onSelect(index, event.currentTarget)}
-          aria-label={`View ${work.label}`}
+          aria-label={`View work image ${String(index + 1).padStart(2, '0')}`}
         >
           <span className="knowledge-work-image">
             <img src={work.image} alt="" loading="lazy" />
             <span className="knowledge-work-view" aria-hidden="true"><FiArrowUpRight /></span>
           </span>
-          <span className="knowledge-work-label">{work.label}</span>
         </button>
       ))}
     </div>
@@ -744,9 +743,9 @@ function KnowledgeWorkModal({ index, onClose, onNavigate, closeButtonRef, trigge
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <section className="knowledge-work-dialog" role="dialog" aria-modal="true" aria-label={work.label}>
+      <section className="knowledge-work-dialog" role="dialog" aria-modal="true" aria-label={`Work image ${String(index + 1).padStart(2, '0')}`}>
         <div className="knowledge-work-dialog-top">
-          <span>{work.label} <i aria-hidden="true" /> {String(index + 1).padStart(2, '0')} / {String(knowledgeHubWorkImages.length).padStart(2, '0')}</span>
+          <span>{String(index + 1).padStart(2, '0')} / {String(knowledgeHubWorkImages.length).padStart(2, '0')}</span>
           <button ref={closeButtonRef} className="knowledge-video-close" type="button" onClick={onClose} aria-label="Close work image">
             <FiX aria-hidden="true" />
           </button>

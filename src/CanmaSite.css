@@ -835,7 +835,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .knowledge-work-total { margin: 0; }
   .knowledge-work-grid { gap: 11px; }
   .knowledge-work-card { padding: 5px; border-radius: 7px; }
-  .knowledge-work-image img { padding: 5px; }
+  .knowledge-work-image img { padding: 1px; }
   .knowledge-work-label { padding: 9px 4px 4px; font-size: 10px; }
   .knowledge-work-backdrop { padding: 10px; }
   .knowledge-work-dialog { max-height: calc(100vh - 20px); padding: 8px; }

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.7e3fdc39.css",
-    "main.js": "/static/js/main.762e1b0b.js",
+    "main.js": "/static/js/main.feaa1437.js",
     "static/js/453.bf09306d.chunk.js": "/static/js/453.bf09306d.chunk.js",
     "static/media/Shyni Dickson.png": "/static/media/Shyni Dickson.26050fdd217f944de622.png",
     "static/media/Chamathka Kumbukgolla.png": "/static/media/Chamathka Kumbukgolla.7d6bf26c8295082b836c.png",
@@ -348,11 +348,11 @@
     "static/media/ezgif-frame-035.jpg": "/static/media/ezgif-frame-035.df20cfb79872f44d85be.jpg",
     "index.html": "/index.html",
     "main.7e3fdc39.css.map": "/static/css/main.7e3fdc39.css.map",
-    "main.762e1b0b.js.map": "/static/js/main.762e1b0b.js.map",
+    "main.feaa1437.js.map": "/static/js/main.feaa1437.js.map",
     "453.bf09306d.chunk.js.map": "/static/js/453.bf09306d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7e3fdc39.css",
-    "static/js/main.762e1b0b.js"
+    "static/js/main.feaa1437.js"
   ]
 }
