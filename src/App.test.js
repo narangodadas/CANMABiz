@@ -16,7 +16,7 @@ test('shows every supplied customer logo in folder order with a seamless duplica
   const expectedLogos = [
     'Angel Travels.png', 'Besi Denim Home.png', 'Bubble.png', 'Dubai Advertising.png',
     'Fashion.png', 'Flower.png', 'Gamisiri eco village.png', 'Gemhub.png', 'Glovil.png',
-    'Golder Green Plantation.png', 'Idiappa shop.png', 'Revitavermi.png', 'RS Logo.png',
+    'Golder Green Plantation.png', 'Idiappa shop.png', 'Nevara Fashion.jpeg', 'Revitavermi.png', 'RS Logo.png',
     'Serendib Garments.png', 'Taste Home.png', 'Tecbase.png',
   ];
   const originalTrack = document.querySelector('.customer-logo-set:not([aria-hidden="true"])');
@@ -25,7 +25,7 @@ test('shows every supplied customer logo in folder order with a seamless duplica
   expect(originalTrack.querySelectorAll('img')).toHaveLength(expectedLogos.length);
   expect(Array.from(originalTrack.querySelectorAll('img'), (image) => image.getAttribute('src'))).toEqual(expectedLogos);
   expect(duplicateTrack.querySelectorAll('img')).toHaveLength(expectedLogos.length);
-  expect(Array.from(originalTrack.querySelectorAll('img'), (image) => image.alt)).toEqual(expectedLogos.map((filename) => `${filename.replace(/\.png$/i, '')} logo`));
+  expect(Array.from(originalTrack.querySelectorAll('img'), (image) => image.alt)).toEqual(expectedLogos.map((filename) => `${filename.replace(/\.(png|jpe?g)$/i, '')} logo`));
 });
 
 test('shows the nine CANMABiz team members in the requested order with portraits', () => {
@@ -76,10 +76,25 @@ test('filters portfolio references and shows all five Knowledge Hub videos', () 
   const { container } = render(<App />);
   const mainNavigation = within(screen.getByRole('navigation', { name: 'Main navigation' }));
 
-  fireEvent.click(mainNavigation.getByRole('link', { name: 'Portfolio' }));
+  fireEvent.click(mainNavigation.getByRole('link', { name: 'Client Portfolio' }));
+  expect(container.querySelectorAll('.portfolio-card')).toHaveLength(17);
+  expect(Array.from(container.querySelectorAll('.portfolio-card img'), (image) => image.alt)).toEqual([
+    'Serendib Garments logo', 'Multi-Fashion logo', 'The Idiappa Shop logo', 'Best Denim Home logo',
+    'Dubai Advertising logo', 'Golder Green Plantation logo', 'Angel Travels logo', 'Taste of Home logo',
+    'Nevara Fashion logo', 'Purewell Holdings logo', 'Ceylon Bloom logo', 'Gami Siri Eco Village logo',
+    'Gemhub logo', 'Glovill Solution logo', 'Revitavermi logo', 'Sylph Residancies logo', 'Tec Base logo',
+  ]);
+  expect(screen.getByText('Digital Media Marketing & Fully Customized Software System Project')).toBeInTheDocument();
+  expect(screen.getByText('Business Consulting, Full Operations & Business Planning')).toBeInTheDocument();
+  expect(screen.getByText('Full ERP System Project')).toBeInTheDocument();
+  const nevaraCard = screen.getByRole('heading', { name: 'Nevara Fashion' }).closest('.portfolio-card');
+  expect(within(nevaraCard).getByText('Digital Media Marketing Project')).toBeInTheDocument();
+  const gemhubCard = screen.getByRole('heading', { name: 'Gemhub' }).closest('.portfolio-card');
+  expect(within(gemhubCard).queryByText('Digital Media Marketing Project')).not.toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Purewell Holdings' })).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Travel & Tourism' }));
   expect(container.querySelectorAll('.portfolio-card')).toHaveLength(1);
-  expect(screen.getByRole('heading', { name: 'Angels Travels' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Angel Travels' })).toBeInTheDocument();
 
   fireEvent.click(mainNavigation.getByRole('link', { name: 'Knowledge Hub' }));
   expect(screen.getByRole('heading', { name: /ideas to move business forward/i })).toBeInTheDocument();
@@ -88,8 +103,10 @@ test('filters portfolio references and shows all five Knowledge Hub videos', () 
   expect(screen.getByText('Home / Knowledge Hub')).toBeInTheDocument();
   expect(document.querySelector('.knowledge-library')).toBeInTheDocument();
   expect(container.querySelectorAll('.knowledge-video-card')).toHaveLength(5);
-  expect(container.querySelector('.knowledge-video-grid')).not.toHaveTextContent(/CANMABiz video|Video 0[1-5]/i);
-  expect(container.querySelectorAll('.knowledge-video-copy')).toHaveLength(0);
+  expect(container.querySelector('.knowledge-video-grid')).toHaveTextContent('Building a Reliable Investment: Start with the Right Approach');
+  expect(container.querySelectorAll('.knowledge-video-copy')).toHaveLength(5);
+  expect(container.querySelector('.knowledge-video-grid')).toHaveTextContent('Google Business Profile: Benefits You May Be Missing');
+  expect(container.querySelector('.knowledge-video-grid')).toHaveTextContent('The 20% Money Rule and Three Habits to Build Wealth');
   expect(Array.from(container.querySelectorAll('.knowledge-video-thumbnail img'), (image) => image.getAttribute('src'))).toEqual([
     'https://img.youtube.com/vi/N1heT-v_eIQ/hqdefault.jpg',
     'https://img.youtube.com/vi/kOCnf_QChg0/hqdefault.jpg',
@@ -103,11 +120,11 @@ test('plays the selected video in an accessible modal and stops it on Escape', (
   render(<App />);
   fireEvent.click(within(screen.getByRole('navigation', { name: 'Main navigation' })).getByRole('link', { name: 'Knowledge Hub' }));
 
-  const videoButton = screen.getByRole('button', { name: 'Play Knowledge Hub video 3' });
+  const videoButton = screen.getByRole('button', { name: 'Play Five Alternatives to Risky Investment Schemes' });
   videoButton.focus();
   fireEvent.click(videoButton);
 
-  const modal = screen.getByRole('dialog', { name: 'Knowledge Hub video' });
+  const modal = screen.getByRole('dialog', { name: 'Five Alternatives to Risky Investment Schemes' });
   expect(modal).toHaveAttribute('aria-modal', 'true');
   expect(modal.querySelector('iframe')).toHaveAttribute(
     'src',
@@ -139,7 +156,7 @@ test('keeps every supplied YouTube URL paired with its matching embedded video I
   ];
 
   videos.forEach(([id, youtubeUrl], index) => {
-    fireEvent.click(screen.getByRole('button', { name: `Play Knowledge Hub video ${index + 1}` }));
+    fireEvent.click(screen.getAllByRole('button', { name: /^play /i })[index]);
     const modal = screen.getByRole('dialog');
     expect(modal.querySelector('iframe')).toHaveAttribute(
       'src',
@@ -163,8 +180,7 @@ test('uses an official alternate thumbnail when a video thumbnail is unavailable
 
 test('opens the CANMABiz work gallery and browses images in an accessible lightbox', () => {
   render(<App />);
-  fireEvent.click(within(screen.getByRole('navigation', { name: 'Main navigation' })).getByRole('link', { name: 'Knowledge Hub' }));
-  fireEvent.click(screen.getByRole('tab', { name: /our work/i }));
+  fireEvent.click(within(screen.getByRole('contentinfo')).getByRole('link', { name: 'Working Gallery' }));
 
   const workCards = screen.getAllByRole('button', { name: /^view work image/i });
   expect(workCards).toHaveLength(15);
@@ -187,6 +203,54 @@ test('opens the CANMABiz work gallery and browses images in an accessible lightb
   expect(document.activeElement).toBe(workCards[0]);
 });
 
+test('adds Reviews to the header and opens the complete Working Gallery from the footer', () => {
+  render(<App />);
+  const mainNavigation = within(screen.getByRole('navigation', { name: 'Main navigation' }));
+  expect(mainNavigation.getByRole('link', { name: 'Reviews' })).toHaveAttribute('href', '/reviews');
+  fireEvent.click(mainNavigation.getByRole('link', { name: 'Knowledge Hub' }));
+  expect(screen.queryByRole('tab', { name: /our work/i })).not.toBeInTheDocument();
+  expect(screen.queryByRole('tab', { name: /videos/i })).not.toBeInTheDocument();
+  expect(screen.getAllByRole('button', { name: /^play knowledge hub video/i })).toHaveLength(5);
+
+  fireEvent.click(within(screen.getByRole('contentinfo')).getByRole('link', { name: 'Working Gallery' }));
+
+  expect(screen.getByRole('heading', { name: /moments from work in progress/i })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Our work, in pictures.' })).toBeInTheDocument();
+  const workCards = screen.getAllByRole('button', { name: /^view work image/i });
+  expect(workCards).toHaveLength(15);
+  fireEvent.click(workCards[0]);
+  expect(screen.getByRole('dialog', { name: 'Work image 01' })).toBeInTheDocument();
+});
+
+test('shows the Nevara Fashion logo and corrected company name on its review', () => {
+  render(<App />);
+  fireEvent.click(within(screen.getByRole('navigation', { name: 'Main navigation' })).getByRole('link', { name: 'Reviews' }));
+
+  const review = screen.getByText('Miss. Narmeda').closest('.testimonial-card');
+  const logo = within(review).getByRole('img', { name: 'Nevara Fashion logo' });
+  expect(logo).toHaveAttribute('src', 'Nevara Fashion.jpeg');
+  expect(logo.parentElement.lastElementChild).toBe(logo);
+  expect(logo.parentElement.firstElementChild).toHaveClass('testimonial-byline-copy');
+  expect(within(review).getByText('Digital Marketing Project · Nevara Fashion')).toBeInTheDocument();
+  expect(within(review).getByText(/digital marketing support for Nevara Fashion/i)).toBeInTheDocument();
+  expect(review).not.toHaveTextContent('Navara Fashion');
+});
+
+test('shows company logos on the other review cards', () => {
+  render(<App />);
+  fireEvent.click(within(screen.getByRole('navigation', { name: 'Main navigation' })).getByRole('link', { name: 'Reviews' }));
+
+  const revitaReview = screen.getByText('Mr. Ajith').closest('.testimonial-card');
+  const purewellReview = screen.getByText('Mr. Dhammika').closest('.testimonial-card');
+
+  const revitaLogo = within(revitaReview).getByRole('img', { name: 'Revita Vermi logo' });
+  const purewellLogo = within(purewellReview).getByRole('img', { name: 'Purewell Holdings logo' });
+  expect(revitaLogo).toHaveAttribute('src', 'Revitavermi.png');
+  expect(purewellLogo).toHaveAttribute('src', 'Bubble.png');
+  expect(revitaLogo.parentElement.lastElementChild).toBe(revitaLogo);
+  expect(purewellLogo.parentElement.lastElementChild).toBe(purewellLogo);
+});
+
 test('shows the supplied service overview and grouped digital marketing offerings', () => {
   render(<App />);
   const mainNavigation = within(screen.getByRole('navigation', { name: 'Main navigation' }));
@@ -202,6 +266,22 @@ test('shows the supplied service overview and grouped digital marketing offering
   expect(screen.getByText('Social Media Reel Production')).toBeInTheDocument();
 });
 
+test('shows the complete department-specific Our Process workflows', () => {
+  render(<App />);
+  fireEvent.click(screen.getByRole('link', { name: 'Our Process' }));
+
+  expect(screen.getByRole('heading', { name: 'Clear steps. Shared progress.' })).toBeInTheDocument();
+  expect(screen.getByRole('navigation', { name: 'Process departments' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Marketing Department' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Finance Department' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'IT Department' })).toBeInTheDocument();
+  expect(document.querySelectorAll('.process-step-card')).toHaveLength(23);
+  expect(screen.getByText('Weekly Performance Reporting')).toBeInTheDocument();
+  expect(screen.getByText('Annual Auditing & Tax Compliance')).toBeInTheDocument();
+  expect(screen.getByText('Testing, Deployment & Integration')).toBeInTheDocument();
+  expect(screen.getByText(/API integrations, databases, and workflow automation/i)).toBeInTheDocument();
+});
+
 test('shows the supplied company overview, capabilities, client count, and industries on About', () => {
   render(<App />);
   const mainNavigation = within(screen.getByRole('navigation', { name: 'Main navigation' }));
@@ -214,6 +294,22 @@ test('shows the supplied company overview, capabilities, client count, and indus
   expect(screen.getByText('SOP System Development')).toBeInTheDocument();
   expect(screen.getByText('Eco Tourism')).toBeInTheDocument();
   expect(screen.getByText('Gems & Jewellery')).toBeInTheDocument();
+});
+
+test('shows industry-specific customer and service references on the Industries page', () => {
+  window.history.pushState({}, '', '/industries');
+  render(<App />);
+
+  expect(screen.getByRole('heading', { name: 'Relevant support. Real business references.' })).toBeInTheDocument();
+  expect(screen.getByText('10')).toBeInTheDocument();
+  expect(screen.getByText('17')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Garment & Apparel' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Technology & Software' })).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'Nevara Fashion logo' })).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'Angel Travels logo' })).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: 'Glovill Solution logo' })).toBeInTheDocument();
+  expect(screen.queryByRole('heading', { name: 'Construction' })).not.toBeInTheDocument();
+  expect(screen.queryByText('No named client reference is listed for this industry yet.')).not.toBeInTheDocument();
 });
 
 test('shows the supplied Why Us principles and comparison, and omits Industries from the footer', () => {

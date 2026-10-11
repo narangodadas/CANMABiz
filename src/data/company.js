@@ -2,7 +2,7 @@ export const company = {
   brand: 'CANMABiz',
   legalName: 'CANMABiz (PVT) LTD',
   website: 'https://canmabiz.com/',
-  email: 'digitalcanmabiz@gmail.com',
+  email: 'support@canmabiz.com',
   phone: '+94 76 464 7290',
   phoneLink: '+94764647290',
   description: 'Professional business solutions for startups, SMEs, corporate organisations and growing businesses.',

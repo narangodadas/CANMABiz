@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/static/css/main.7e3fdc39.css",
-    "main.js": "/static/js/main.feaa1437.js",
+    "main.css": "/static/css/main.6f6de865.css",
+    "main.js": "/static/js/main.9669a1c3.js",
     "static/js/453.bf09306d.chunk.js": "/static/js/453.bf09306d.chunk.js",
+    "static/media/team01.PNG": "/static/media/team01.8b0f8013fc0976b26dd8.PNG",
     "static/media/Shyni Dickson.png": "/static/media/Shyni Dickson.26050fdd217f944de622.png",
     "static/media/Chamathka Kumbukgolla.png": "/static/media/Chamathka Kumbukgolla.7d6bf26c8295082b836c.png",
     "static/media/Chathurangani Kulasooriya.png": "/static/media/Chathurangani Kulasooriya.8ceef74814b7754b8290.png",
@@ -28,7 +29,6 @@
     "static/media/Golder Green Plantation.png": "/static/media/Golder Green Plantation.6cf16268be39dbf63f71.png",
     "static/media/Angel Travels.png": "/static/media/Angel Travels.605a829ef5e6d0e4dedd.png",
     "static/media/Serendib Garments.png": "/static/media/Serendib Garments.3cd064a32f7651e54764.png",
-    "static/media/TeamNew.png": "/static/media/TeamNew.8c44a0da4fe0b47a9b78.png",
     "static/media/Image07.jpeg": "/static/media/Image07.a7c394bb81bff4133aec.jpeg",
     "static/media/Image05.jpeg": "/static/media/Image05.182c36bd71c209b9c27b.jpeg",
     "static/media/Image06.jpeg": "/static/media/Image06.7b7f6e9987c206b1830b.jpeg",
@@ -218,6 +218,7 @@
     "static/media/ezgif-frame-139.jpg": "/static/media/ezgif-frame-139.a1178cf3c6c4f64da272.jpg",
     "static/media/ezgif-frame-137.jpg": "/static/media/ezgif-frame-137.18673ee2e6dd086073c5.jpg",
     "static/media/ezgif-frame-138.jpg": "/static/media/ezgif-frame-138.18673ee2e6dd086073c5.jpg",
+    "static/media/Nevara Fashion.jpeg": "/static/media/Nevara Fashion.aac933f1263b16fb3fde.jpeg",
     "static/media/ezgif-frame-136.jpg": "/static/media/ezgif-frame-136.ea33ea13465d7eee3179.jpg",
     "static/media/ezgif-frame-135.jpg": "/static/media/ezgif-frame-135.edaf6de9aac2fd39f40b.jpg",
     "static/media/ezgif-frame-009.jpg": "/static/media/ezgif-frame-009.2555e2580b52374461cd.jpg",
@@ -347,12 +348,12 @@
     "static/media/ezgif-frame-043.jpg": "/static/media/ezgif-frame-043.9c4534db42646e2e1fe3.jpg",
     "static/media/ezgif-frame-035.jpg": "/static/media/ezgif-frame-035.df20cfb79872f44d85be.jpg",
     "index.html": "/index.html",
-    "main.7e3fdc39.css.map": "/static/css/main.7e3fdc39.css.map",
-    "main.feaa1437.js.map": "/static/js/main.feaa1437.js.map",
+    "main.6f6de865.css.map": "/static/css/main.6f6de865.css.map",
+    "main.9669a1c3.js.map": "/static/js/main.9669a1c3.js.map",
     "453.bf09306d.chunk.js.map": "/static/js/453.bf09306d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7e3fdc39.css",
-    "static/js/main.feaa1437.js"
+    "static/css/main.6f6de865.css",
+    "static/js/main.9669a1c3.js"
   ]
 }

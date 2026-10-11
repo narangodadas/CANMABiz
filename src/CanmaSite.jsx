@@ -20,7 +20,6 @@ import {
   FiMail,
   FiMessageSquare,
   FiMenu,
-  FiMonitor,
   FiPhone,
   FiPlay,
   FiTarget,
@@ -60,11 +59,12 @@ const pageMeta = {
   '/production': ['CANMABiz Production | Creative Services', 'Photography, video, graphic design and promotional production services.'],
   '/portfolio': ['Portfolio | CANMABiz', 'Businesses referenced in the CANMABiz business proposal.'],
   '/industries': ['Industries | CANMABiz', 'Business solutions for organisations across a range of industries.'],
-  '/process': ['Our Process | CANMABiz', 'An overview of how CANMABiz works with businesses, with process stages to be confirmed.'],
+  '/process': ['Our Process | CANMABiz', 'Explore how CANMABiz supports marketing, finance, and IT projects through clear, tailored steps.'],
   '/why-us': ['Why CANMABiz | Business Solutions Partner', 'Discover the principles behind CANMABiz business solutions.'],
   '/team': ['Our Team | CANMABiz', 'Meet the people behind CANMABiz, with profiles published on the company website.'],
   '/reviews': ['Reviews | CANMABiz', 'Client reviews will be added when approved testimonials are available.'],
   '/knowledge-hub': ['Knowledge Hub | CANMABiz', 'Business and marketing insights from CANMABiz.'],
+  '/working-gallery': ['Working Gallery | CANMABiz', 'Explore moments and projects from the CANMABiz work collection.'],
   '/contact': ['Contact CANMABiz | Let’s Talk', 'Contact CANMABiz about business, digital marketing, website and production services.'],
   '/privacy': ['Privacy Policy | CANMABiz', 'Privacy policy information for CANMABiz.'],
   '/terms': ['Terms & Conditions | CANMABiz', 'Terms and conditions information for CANMABiz.'],
@@ -171,8 +171,8 @@ function Footer() {
             ))}
           </div>
         </div>
-        <div className="footer-column"><h3>Explore</h3><Link to="/about">About Us</Link><Link to="/services">Services</Link><Link to="/portfolio">Client Portfolio</Link><Link to="/process">Our Process</Link><Link to="/team">Team</Link><Link to="/reviews">Reviews</Link></div>
-        <div className="footer-column"><h3>Solutions</h3>{services.map((service) => <Link key={service.path} to={service.path}>{service.title}</Link>)}<Link to="/knowledge-hub">Knowledge Hub</Link></div>
+        <div className="footer-column"><h3>Explore</h3><Link to="/about">About Us</Link><Link to="/services">Services</Link><Link to="/portfolio">Client Portfolio</Link><Link to="/process">Our Process</Link><Link to="/team">Team</Link><Link to="/reviews">Reviews</Link><Link to="/working-gallery">Working Gallery</Link></div>
+        <div className="footer-column"><h3>Solutions</h3>{services.map((service) => <Link key={service.path} to={service.path}>{service.title}</Link>)}</div>
         <div className="footer-column footer-contact"><h3>Contact</h3><a className="footer-contact-link" href={`mailto:${contact.email}`}><FiMail aria-hidden="true" />{contact.email}</a><a className="footer-contact-link" href={`tel:${contact.phoneLink}`}><FiPhone aria-hidden="true" />{contact.phone}</a></div>
       </div>
       <div className="footer-bottom wrap"><p>© {new Date().getFullYear()} {company.legalName}. All rights reserved.</p><div><Link to="/privacy">Privacy Policy</Link><Link to="/terms">Terms &amp; Conditions</Link></div><a className="back-top" href="#top" onClick={(event) => { event.preventDefault(); scrollToTop(); }}>Back to top <FiArrowUpRight /></a></div>
@@ -415,7 +415,7 @@ function HomePage() {
       </div>
     </section>
 
-    <section className="industries-section section-pad"><div className="wrap industries-layout"><div><p className="eyebrow">03 / Across industries</p><h2>Different sectors.<br />Individual needs.</h2><p className="body-copy">The company proposal notes more than 20 businesses, with experience across sectors including:</p><ActionLink to="/industries">Explore industries</ActionLink></div><div className="industry-list">{industries.map((industry, index) => <Link key={industry} to="/industries"><span>0{index + 1}</span>{industry}<FiArrowUpRight /></Link>)}</div></div></section>
+    <section className="industries-section section-pad"><div className="wrap industries-layout"><div><p className="eyebrow">03 / Across industries</p><h2>Different sectors.<br />Individual needs.</h2><p className="body-copy">More than 20 businesses trust CANMABiz, with named portfolio references across {industries.length} industry areas.</p><ActionLink to="/industries">Explore industries</ActionLink></div><div className="industry-list">{industries.slice(0, 7).map((industry, index) => <Link key={industry.name} to="/industries"><span>0{index + 1}</span>{industry.name}<FiArrowUpRight /></Link>)}</div></div></section>
 
     <section className="why-section section-pad"><div className="wrap why-layout"><div className="why-heading"><p className="eyebrow">04 / Why CANMABiz</p><h2>One partner.<br />A broader view.</h2><p className="body-copy">Business needs rarely sit in one place. CANMABiz brings professional guidance, digital services and production capabilities under one roof.</p><ActionLink to="/why-us">What sets us apart</ActionLink></div><div className="why-points">{[
       ['01', 'One-stop business solutions', 'A connected range of business, digital and creative services.'],
@@ -454,7 +454,7 @@ function AboutPage() {
 
   return <><PageHero eyebrow="Company / About" title={<>Business solutions.<br />Built for growth.</>} description="CANMABiz (Pvt) Ltd is a trusted business solutions company providing a complete range of professional services to startups, SMEs, corporate organizations, and growing businesses. Our expertise includes Business Consultation, Marketing Strategy, Digital Marketing, Financial Guidance, HR Support, Business Funding Guidance, IT Support, SOP System Development, Website Development, and Creative Production, delivering customized solutions that support sustainable business growth." />
     <section className="about-capabilities section-pad"><div className="wrap about-capabilities-layout"><div className="about-capabilities-heading"><p className="eyebrow">One partner / Connected expertise</p><h2>Practical support.<br />A broader view.</h2><p>We combine strategic expertise, digital innovation, and creative excellence to meet the unique requirements of every client.</p><ActionLink to="/services">Explore our services</ActionLink></div><ol className="about-capability-list">{capabilities.map((capability, index) => <li key={capability}><span>{String(index + 1).padStart(2, '0')}</span><strong>{capability}</strong></li>)}</ol></div></section>
-    <section className="about-client-section section-pad"><div className="wrap"><div className="about-client-intro"><div className="about-client-stat"><strong>20+</strong><span>clients served</span></div><div className="about-client-copy"><p className="eyebrow">Trusted across industries</p><h2>Insight shaped by<br />different industries.</h2><p>Today, more than 20 clients trust CANMABiz for a wide range of professional services across diverse industries. Our industry experience helps us understand the unique requirements of each business and deliver innovative, practical, and results-driven solutions that create lasting value for our clients.</p></div></div><div className="about-industry-list">{industries.map((industry, index) => <div key={industry}><span>{String(index + 1).padStart(2, '0')}</span><strong>{industry}</strong><FiArrowUpRight aria-hidden="true" /></div>)}</div></div></section>
+    <section className="about-client-section section-pad"><div className="wrap"><div className="about-client-intro"><div className="about-client-stat"><strong>20+</strong><span>clients served</span></div><div className="about-client-copy"><p className="eyebrow">Trusted across industries</p><h2>Insight shaped by<br />different industries.</h2><p>Today, more than 20 clients trust CANMABiz for a wide range of professional services across diverse industries. Our industry experience helps us understand the unique requirements of each business and deliver innovative, practical, and results-driven solutions that create lasting value for our clients.</p></div></div><div className="about-industry-list">{industries.map((industry, index) => <div key={industry.name}><span>{String(index + 1).padStart(2, '0')}</span><strong>{industry.name}</strong><FiArrowUpRight aria-hidden="true" /></div>)}</div></div></section>
     <CTA title="Let’s build what comes next." description="Tell us where your business is heading and explore the support that fits." />
   </>;
 }
@@ -493,20 +493,140 @@ function PortfolioPage() {
   const filters = ['All', ...Array.from(new Set(portfolio.map((item) => item.category)))];
   const visibleItems = filter === 'All' ? portfolio : portfolio.filter((item) => item.category === filter);
   return <><PageHero eyebrow="Experience / Portfolio" title={<>Business names.<br />Shared experience.</>} description="A selection of businesses and organisations named in the CANMABiz proposal. Project details can be added as they are confirmed." />
-    <section className="portfolio-section section-pad"><div className="wrap"><div className="filter-bar" role="group" aria-label="Filter portfolio by industry">{filters.map((category) => <button key={category} className={filter === category ? 'filter-button selected' : 'filter-button'} onClick={() => setFilter(category)}>{category}</button>)}</div><div className="portfolio-grid">{visibleItems.map((item, index) => { const hasLogo = Boolean(item.image); return <article className="portfolio-card" key={item.name}><div className={`portfolio-placeholder${hasLogo ? ' has-logo' : ''}`}><span>CANMABiz / {String(index + 1).padStart(2, '0')}</span>{hasLogo ? <img src={item.image} alt={`${item.name} logo`} /> : <FiLayers aria-hidden="true" />}</div><div className="portfolio-card-info"><div><h2>{item.name}</h2><p>{item.category}</p></div><span className="portfolio-open" aria-label="Portfolio reference"><FiArrowUpRight /></span></div></article>; })}</div><p className="editor-note">Client names and industry categories are shown as provided. Project descriptions, locations and imagery are not available in the supplied material.</p></div></section><CTA />
+    <section className="portfolio-section section-pad"><div className="wrap"><div className="filter-bar" role="group" aria-label="Filter portfolio by industry">{filters.map((category) => <button key={category} type="button" aria-pressed={filter === category} className={filter === category ? 'filter-button selected' : 'filter-button'} onClick={() => setFilter(category)}>{category}</button>)}</div><div className="portfolio-grid">{visibleItems.map((item, index) => { const hasLogo = Boolean(item.image); return <article className="portfolio-card" key={`${filter}-${item.name}`} style={{ '--portfolio-index': Math.min(index, 6) }}><div className={`portfolio-placeholder${hasLogo ? ' has-logo' : ''}`}><span>CANMABiz / {String(index + 1).padStart(2, '0')}</span>{hasLogo ? <img src={item.image} alt={`${item.name} logo`} /> : <FiLayers aria-hidden="true" />}</div><div className="portfolio-card-info"><div><h2>{item.name}</h2>{item.description && <p>{item.description}</p>}</div><span className="portfolio-open" aria-label="Portfolio reference"><FiArrowUpRight /></span></div></article>; })}</div><p className="editor-note">Service descriptions are shown for businesses where project details were provided.</p></div></section><CTA />
   </>;
 }
 
 function IndustriesPage() {
-  const icons = [FiLayers, FiGlobe, FiCompass, FiBriefcase, FiTarget, FiMonitor, FiArrowDownRight];
-  return <><PageHero eyebrow="Experience / Industries" title={<>Different industries.<br />Solutions that fit.</>} description="CANMABiz works with businesses across a range of sectors, adapting its support to the needs of each organisation." />
-    <section className="industries-page section-pad"><div className="wrap"><div className="industry-card-grid">{industries.map((industry, index) => { const Icon = icons[index]; return <article className="industry-card" key={industry}><div><span>0{index + 1}</span><Icon /></div><h2>{industry}</h2><p>Customised business support shaped around the sector and organisation.</p></article>; })}</div></div></section><CTA />
+  const icons = [FiLayers, FiGlobe, FiCompass, FiBriefcase, FiTarget, FiArrowDownRight, FiMessageSquare, FiCpu, FiCompass, FiBriefcase];
+  return <><PageHero eyebrow="Experience / Industries" title={<>Different industries.<br />Solutions that fit.</>} description="Explore the industries CANMABiz supports, the named businesses in our portfolio, and the services delivered for each organisation." />
+    <section className="industries-page section-pad">
+      <div className="wrap">
+        <div className="industries-overview">
+          <div><span className="eyebrow">CANMABiz / Sector experience</span><h2>Relevant support.<br />Real business references.</h2><p>Browse our industry experience alongside the businesses and project services listed in the CANMABiz portfolio.</p></div>
+        </div>
+        <div className="industry-card-grid">
+          {industries.map((industry, index) => {
+            const Icon = icons[index];
+            const clients = industry.clients.map((name) => portfolio.find((item) => item.name === name)).filter(Boolean);
+            return <article className="industry-card" key={industry.name}>
+              <div className="industry-card-topline"><span>{String(index + 1).padStart(2, '0')} / INDUSTRY</span><Icon aria-hidden="true" /></div>
+              <h2>{industry.name}</h2>
+              <p className="industry-card-description">{industry.description}</p>
+              <div className="industry-client-list" aria-label={`${industry.name} client references`}>
+                {clients.length ? clients.map((client) => <div className="industry-client" key={client.name}>
+                  {client.image ? <img src={client.image} alt={`${client.name} logo`} loading="lazy" /> : <span className="industry-client-mark" aria-hidden="true">{client.name.slice(0, 1)}</span>}
+                  <div><strong>{client.name}</strong><span>{client.description}</span></div>
+                  <FiArrowUpRight aria-hidden="true" />
+                </div>) : <p className="industry-no-reference">No named client reference is listed for this industry yet.</p>}
+              </div>
+            </article>;
+          })}
+        </div>
+        <p className="industries-note">Business names and service references are shown as listed in the CANMABiz portfolio. Sector groupings are provided to help visitors explore relevant experience.</p>
+      </div>
+    </section><CTA />
   </>;
 }
 
 function ProcessPage() {
-  return <><PageHero eyebrow="Working together / Our process" title={<>A thoughtful start<br />to the right support.</>} description="CANMABiz's exact project stages were not detailed in the available materials. This section is structured for the confirmed process to be added." />
-    <section className="process-section section-pad"><div className="wrap"><SectionHeading eyebrow="Process framework" title="A clear place for each step." description="Editable process stages, pending confirmation from CANMABiz." /><div className="process-list">{['Stage name to confirm', 'Stage name to confirm', 'Stage name to confirm', 'Stage name to confirm'].map((stage, index) => <div className="process-step" key={index}><span>0{index + 1}</span><h2>{stage}</h2><p>Process description to be added from approved company information.</p><FiArrowDownRight /></div>)}</div></div></section><CTA />
+  const departments = [
+    {
+      id: 'marketing-process',
+      number: '01',
+      name: 'Marketing Department',
+      summary: 'We partner with your business to build, launch, and scale your brand’s digital presence through a structured, transparent strategy.',
+      steps: [
+        ['Discovery & Consultation', 'We start with a thorough consultation to analyze your business goals, target audience, and market potential.'],
+        ['Seamless Communication Setup', 'A dedicated WhatsApp channel and point of contact are established for swift day-to-day communication.'],
+        ['Customized Digital Strategy', 'We design a comprehensive digital media roadmap tailored specifically to your growth objectives.'],
+        ['Proposal & Agreement', 'You receive a detailed pricing quotation outlining deliverables, timelines, and strategy before we begin.'],
+        ['Execution & Management', 'We execute and manage all core marketing functions, including paid ad campaigns, social media management, SEO optimization, post creation, and video production.'],
+        ['Weekly Performance Reporting', 'Clear weekly performance dashboards and analytics keep you informed on key metrics and ROI.'],
+        ['Continuous Optimization & Feedback', 'We continuously refine campaigns based on your feedback and ongoing performance insights.'],
+      ],
+    },
+    {
+      id: 'finance-process',
+      number: '02',
+      name: 'Finance Department',
+      summary: 'We streamline your financial operations, build robust accounting systems, and ensure full compliance and growth-driven financial management.',
+      steps: [
+        ['Financial Assessment', 'We conduct an initial consultation to diagnose operational bottlenecks and financial pain points.'],
+        ['On-Site Audit & Review', 'Our team conducts a physical or virtual site visit to review your existing documentation and financial workflows.'],
+        ['Tailored Solutions & Financial Roadmap', 'We design a customized financial solution and action plan specific to your organization’s structure.'],
+        ['Proposal & Approval', 'A clear pricing quotation and implementation plan are shared for your formal review and approval.'],
+        ['Financial System Implementation', 'We set up and configure your customized manual or automated accounting and financial tracking system.'],
+        ['Team Training & Onboarding', 'We train your internal personnel to ensure smooth day-to-day system operation and compliance.'],
+        ['Monthly Financial Statements', 'Detailed monthly financial statements and management reports are delivered to keep your executive team informed.'],
+        ['Annual Auditing & Tax Compliance', 'We prepare end-of-year financial statements, facilitate Chartered Accountant verification, and file corporate (and optional personal) tax returns.'],
+      ],
+    },
+    {
+      id: 'it-process',
+      number: '03',
+      name: 'IT Department',
+      summary: 'We deliver reliable, scalable, and innovative IT solutions that streamline business operations, enhance digital capabilities, and support long-term business growth. Our structured approach ensures every solution is tailored to your requirements, implemented professionally, and supported throughout its lifecycle.',
+      steps: [
+        ['Initial Consultation & Requirements Gathering', 'We begin with a detailed consultation to understand your business objectives, operational challenges, technical requirements, and expectations for the proposed IT solution.'],
+        ['System Analysis & Technical Assessment', 'Our team evaluates your existing systems, workflows, infrastructure, and technical environment to identify opportunities for improvement and determine the most effective approach.'],
+        ['Customized Solution Planning', 'We develop a tailored technical roadmap outlining the proposed solution, key features, technology stack, project scope, implementation strategy, and expected deliverables.'],
+        ['Proposal & Project Approval', 'A comprehensive quotation and project proposal are provided, covering development costs, timelines, deliverables, and agreed requirements before implementation begins.'],
+        ['Design, Development & Implementation', 'We design, develop, and implement customized IT solutions, including websites, web applications, business management systems, mobile applications, API integrations, databases, and workflow automation based on your business needs.'],
+        ['Testing, Deployment & Integration', 'Every solution undergoes functional testing, bug fixing, performance checks, and compatibility testing before deployment. We also manage system integrations and deployment to the agreed hosting or production environment.'],
+        ['Training & System Handover', 'We provide the necessary documentation, system demonstrations, and user training to help your team operate and manage the implemented solution confidently and efficiently.'],
+        ['Ongoing Technical Support & Optimization', 'Following deployment, we provide agreed technical support, troubleshooting, maintenance, bug fixes, system updates, and performance improvements to ensure your solution continues to meet your evolving business requirements.'],
+      ],
+    },
+  ];
+
+  return <>
+    <PageHero
+      eyebrow="Working together / Our process"
+      title={<>Clear steps.<br />Shared progress.</>}
+      description="See how our Marketing, Finance, and IT teams take your project from the first conversation through delivery and ongoing support."
+    />
+    <section className="process-section section-pad">
+      <div className="wrap">
+        <div className="process-overview">
+          <div>
+            <p className="eyebrow">CANMABiz / How we work</p>
+            <h2>Designed around your department and your goals.</h2>
+            <p>Every engagement follows a clear, collaborative path. Choose a department to explore the steps and support involved.</p>
+          </div>
+          <nav className="process-department-nav" aria-label="Process departments">
+            {departments.map((department) => (
+              <a href={`#${department.id}`} key={department.id}>
+                <span>{department.number}</span>{department.name.replace(' Department', '')}<FiArrowUpRight aria-hidden="true" />
+              </a>
+            ))}
+          </nav>
+        </div>
+        <div className="process-departments">
+          {departments.map((department) => (
+            <section className="process-department" id={department.id} key={department.id} aria-labelledby={`${department.id}-title`}>
+              <div className="process-department-heading">
+                <div className="process-department-title">
+                  <span>{department.number} / Department process</span>
+                  <h2 id={`${department.id}-title`}>{department.name}</h2>
+                </div>
+                <p>{department.summary}</p>
+              </div>
+              <ol className="process-step-grid">
+                {department.steps.map(([title, description], index) => (
+                  <li className="process-step-card" key={title}>
+                    <span className="process-step-number">STEP {String(index + 1).padStart(2, '0')}</span>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+    <CTA title="Ready to take the next step?" description="Tell us what your organisation is working towards, and we’ll help you find the right place to begin." />
   </>;
 }
 
@@ -541,7 +661,7 @@ function TeamPage() {
 }
 
 function TestimonialCard({ testimonial }) {
-  return <article className="testimonial-card"><div className="testimonial-topline"><span className="quote-mark" aria-hidden="true">“</span><span className="review-stars" aria-label={`${testimonial.rating} out of 5 stars`}>{'★'.repeat(testimonial.rating)}</span></div><blockquote>{testimonial.quote}</blockquote><div className="testimonial-byline"><strong>{testimonial.name}</strong><span>{[testimonial.role, testimonial.company].filter(Boolean).join(' · ')}</span><small>{testimonial.service}</small></div></article>;
+  return <article className="testimonial-card"><div className="testimonial-topline"><span className="quote-mark" aria-hidden="true">“</span><span className="review-stars" aria-label={`${testimonial.rating} out of 5 stars`}>{'★'.repeat(testimonial.rating)}</span></div><blockquote>{testimonial.quote}</blockquote><div className="testimonial-byline"><div className="testimonial-byline-copy"><strong>{testimonial.name}</strong><span>{[testimonial.role, testimonial.company].filter(Boolean).join(' · ')}</span><small>{testimonial.service}</small></div>{testimonial.companyLogo && <img className="testimonial-company-logo" src={testimonial.companyLogo} alt={`${testimonial.company} logo`} />}</div></article>;
 }
 
 function ReviewsPage() {
@@ -583,6 +703,11 @@ function KnowledgeVideoCard({ video, index, onSelect }) {
           <span className="knowledge-video-play" aria-hidden="true"><FiPlay /></span>
         </span>
       </button>
+      <div className="knowledge-video-copy">
+        <span className="knowledge-video-category">{video.category}</span>
+        <h3>{title}</h3>
+        <p>{video.description}</p>
+      </div>
     </article>
   );
 }
@@ -640,8 +765,9 @@ function KnowledgeVideoModal({ video, onClose, closeButtonRef, triggerRef }) {
       <section className="knowledge-video-dialog" role="dialog" aria-modal="true" aria-labelledby="knowledge-video-title">
         <div className="knowledge-video-dialog-heading">
           <div>
-            <span className="knowledge-video-category">CANMABiz / Knowledge Hub</span>
+            <span className="knowledge-video-category">{video.category || 'CANMABiz / Knowledge Hub'}</span>
             <h2 id="knowledge-video-title">{title}</h2>
+            {video.description && <p className="knowledge-video-description">{video.description}</p>}
           </div>
           <button ref={closeButtonRef} className="knowledge-video-close" type="button" onClick={onClose} aria-label="Close video">
             <FiX aria-hidden="true" />
@@ -687,6 +813,26 @@ function KnowledgeWorkGallery({ onSelect }) {
       ))}
     </div>
   );
+}
+
+function WorkGalleryCollection() {
+  const [activeWorkIndex, setActiveWorkIndex] = useState(null);
+  const closeButtonRef = useRef(null);
+  const triggerRef = useRef(null);
+  const selectWork = (index, trigger) => {
+    triggerRef.current = trigger;
+    setActiveWorkIndex(index);
+  };
+  const closeWork = useCallback(() => setActiveWorkIndex(null), []);
+
+  return <>
+    <div className="knowledge-work-heading">
+      <div><span className="knowledge-work-eyebrow"><FiFolder aria-hidden="true" /> CANMABiz / Work Gallery</span><h2>Our work, in pictures.</h2><p>Browse moments and projects from the CANMABiz work collection.</p></div>
+      <span className="knowledge-work-total">{knowledgeHubWorkImages.length} moments</span>
+    </div>
+    <KnowledgeWorkGallery onSelect={selectWork} />
+    {activeWorkIndex !== null && <KnowledgeWorkModal index={activeWorkIndex} onClose={closeWork} onNavigate={setActiveWorkIndex} closeButtonRef={closeButtonRef} triggerRef={triggerRef} />}
+  </>;
 }
 
 function KnowledgeWorkModal({ index, onClose, onNavigate, closeButtonRef, triggerRef }) {
@@ -775,9 +921,7 @@ function KnowledgeWorkModal({ index, onClose, onNavigate, closeButtonRef, trigge
 }
 
 function KnowledgeHubPage() {
-  const [activeCollection, setActiveCollection] = useState('videos');
   const [activeVideo, setActiveVideo] = useState(null);
-  const [activeWorkIndex, setActiveWorkIndex] = useState(null);
   const closeButtonRef = useRef(null);
   const triggerRef = useRef(null);
 
@@ -786,11 +930,6 @@ function KnowledgeHubPage() {
     setActiveVideo(video);
   };
   const closeVideo = () => setActiveVideo(null);
-  const selectWork = (index, trigger) => {
-    triggerRef.current = trigger;
-    setActiveWorkIndex(index);
-  };
-  const closeWork = useCallback(() => setActiveWorkIndex(null), []);
 
   return <>
     <PageHero
@@ -801,89 +940,91 @@ function KnowledgeHubPage() {
     />
     <section className="knowledge-library">
       <div className="wrap knowledge-library-content">
-        <div className="knowledge-collection-switch" role="tablist" aria-label="Knowledge Hub collections">
-          <button
-            id="knowledge-videos-tab"
-            className={activeCollection === 'videos' ? 'knowledge-collection-tab active' : 'knowledge-collection-tab'}
-            type="button"
-            role="tab"
-            aria-selected={activeCollection === 'videos'}
-            tabIndex={activeCollection === 'videos' ? 0 : -1}
-            aria-controls="knowledge-collection-panel"
-            onClick={() => setActiveCollection('videos')}
-            onKeyDown={(event) => {
-              if (event.key === 'ArrowRight') {
-                event.preventDefault();
-                setActiveCollection('work');
-                document.getElementById('knowledge-work-tab')?.focus();
-              }
-            }}
-          >
-            <FiFilm aria-hidden="true" /> Videos 
-          </button>
-          <button
-            id="knowledge-work-tab"
-            className={activeCollection === 'work' ? 'knowledge-collection-tab active' : 'knowledge-collection-tab'}
-            type="button"
-            role="tab"
-            aria-selected={activeCollection === 'work'}
-            tabIndex={activeCollection === 'work' ? 0 : -1}
-            aria-controls="knowledge-collection-panel"
-            onClick={() => setActiveCollection('work')}
-            onKeyDown={(event) => {
-              if (event.key === 'ArrowLeft') {
-                event.preventDefault();
-                setActiveCollection('videos');
-                document.getElementById('knowledge-videos-tab')?.focus();
-              }
-            }}
-          >
-            <FiFolder aria-hidden="true" /> Our Work
-          </button>
+        <div className="knowledge-work-heading">
+          <div><span className="knowledge-work-eyebrow"><FiFilm aria-hidden="true" /> CANMABiz / Knowledge Library</span><h2>Knowledge you can put to work.</h2><p>Discover useful insights and practical lessons from CANMABiz videos—ideas you can take away and apply to your business.</p></div>
         </div>
-        <div id="knowledge-collection-panel" role="tabpanel" aria-labelledby={activeCollection === 'videos' ? 'knowledge-videos-tab' : 'knowledge-work-tab'}>
-          {activeCollection === 'videos' ? <>
-            <div className="knowledge-work-heading">
-              <div><span className="knowledge-work-eyebrow"><FiFilm aria-hidden="true" /> CANMABiz / Knowledge Library</span><h2>Knowledge you can put to work.</h2><p>Discover useful insights and practical lessons from CANMABiz videos—ideas you can take away and apply to your business.</p></div>
-            </div>
-            <div className="knowledge-library-meta"><span><i aria-hidden="true" />Official CANMABiz videos</span></div>
-            <div className="knowledge-video-grid" aria-label="CANMABiz video library">
-              {knowledgeHubVideos.map((video, index) => (
-                <KnowledgeVideoCard key={video.id} video={video} index={index} onSelect={selectVideo} />
-              ))}
-            </div>
-          </> : <>
-            <div className="knowledge-work-heading">
-              <div><span className="knowledge-work-eyebrow"><FiFolder aria-hidden="true" /> CANMABiz / Work Gallery</span><h2>Our work, in pictures.</h2><p>Browse moments and projects from the CANMABiz work collection.</p></div>
-            </div>
-            <KnowledgeWorkGallery onSelect={selectWork} />
-          </>}
+        <div className="knowledge-library-meta"><span><i aria-hidden="true" />Official CANMABiz videos</span></div>
+        <div className="knowledge-video-grid" aria-label="CANMABiz video library">
+          {knowledgeHubVideos.map((video, index) => (
+            <KnowledgeVideoCard key={video.id} video={video} index={index} onSelect={selectVideo} />
+          ))}
         </div>
       </div>
     </section>
     <CTA title="Looking for support right now?" description="Explore the services CANMABiz can tailor to your organisation." />
     {activeVideo && <KnowledgeVideoModal video={activeVideo} onClose={closeVideo} closeButtonRef={closeButtonRef} triggerRef={triggerRef} />}
-    {activeWorkIndex !== null && <KnowledgeWorkModal index={activeWorkIndex} onClose={closeWork} onNavigate={setActiveWorkIndex} closeButtonRef={closeButtonRef} triggerRef={triggerRef} />}
+  </>;
+}
+
+function WorkingGalleryPage() {
+  return <>
+    <PageHero
+      eyebrow="CANMABiz / Working Gallery"
+      title={<>Moments from<br />work in progress.</>}
+      description="Explore people, projects, and moments from the CANMABiz work collection."
+      breadcrumb="Home / Working Gallery"
+    />
+    <section className="knowledge-library">
+      <div className="wrap knowledge-library-content">
+        <WorkGalleryCollection />
+      </div>
+    </section>
+    <CTA title="Let’s create the next moment." description="Talk with CANMABiz about the support your business needs." />
   </>;
 }
 
 function ContactPage() {
   const [status, setStatus] = useState('');
-  const handleSubmit = (event) => {
+  const [statusType, setStatusType] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const submittingRef = useRef(false);
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const subject = encodeURIComponent(`Website enquiry: ${formData.get('service')}`);
-    const body = encodeURIComponent([
-      `Name: ${formData.get('name')}`, `Email: ${formData.get('email')}`,
-      `Phone: ${formData.get('phone') || 'Not provided'}`, `Company: ${formData.get('company') || 'Not provided'}`,
-      `Service required: ${formData.get('service')}`, '', String(formData.get('message')),
-    ].join('\n'));
-    setStatus('Your email app will open with your enquiry ready to send.');
-    window.location.href = `mailto:${contact.email}?subject=${subject}&body=${body}`;
+    if (submittingRef.current) return;
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    submittingRef.current = true;
+    setIsSubmitting(true);
+    setStatus('');
+    setStatusType('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          company: formData.get('company'),
+          service: formData.get('service'),
+          message: formData.get('message'),
+          website: formData.get('website'),
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || result?.success !== true) {
+        setStatus(typeof result?.message === 'string' ? result.message : 'We could not send your enquiry. Please try again.');
+        setStatusType('error');
+        return;
+      }
+
+      form.reset();
+      setStatus('Thank you. Your enquiry has been sent successfully.');
+      setStatusType('success');
+    } catch {
+      setStatus('We could not connect to the enquiry service. Please check your connection and try again.');
+      setStatusType('error');
+    } finally {
+      submittingRef.current = false;
+      setIsSubmitting(false);
+    }
   };
   return <><PageHero eyebrow="Get in touch / Contact" title={<>Let’s talk about<br />your business.</>} description="Tell us what you’re working on and where you’d like support. Contact CANMABiz directly or send an enquiry." />
     <section className="contact-section section-pad"><div className="wrap contact-layout"><div className="contact-details"><p className="eyebrow">Contact details</p><h2>Start with a conversation.</h2><p>Reach CANMABiz using the contact details below. There’s no office address listed here because one was not available in the supplied information.</p><a href={`mailto:${contact.email}`}><span><FiMail /></span><div><small>Email</small><strong>{contact.email}</strong></div><FiArrowUpRight /></a><a href={`tel:${contact.phoneLink}`}><span><FiPhone /></span><div><small>Phone</small><strong>{contact.phone}</strong></div><FiArrowUpRight /></a><a href={`https://wa.me/${contact.phoneLink.replace('+', '')}`} target="_blank" rel="noreferrer"><span className="whatsapp-symbol">WA</span><div><small>WhatsApp</small><strong>Message CANMABiz</strong></div><FiArrowUpRight /></a></div>
-      <form className="contact-form" onSubmit={handleSubmit}><div className="form-heading"><h2>Send an enquiry</h2><p>Fields marked * are required. Your email app will be used to send the message.</p></div><div className="form-grid"><label>Name *<input name="name" autoComplete="name" required /></label><label>Email *<input name="email" type="email" autoComplete="email" required /></label><label>Phone<input name="phone" type="tel" autoComplete="tel" /></label><label>Company<input name="company" autoComplete="organization" /></label><label className="form-wide">Service required *<select name="service" required defaultValue=""><option value="" disabled>Select a service</option>{services.map((service) => <option key={service.path} value={service.title}>{service.title}</option>)}</select></label><label className="form-wide">Message *<textarea name="message" rows="5" required /></label></div><button className="button button-dark" type="submit">Prepare enquiry <FiArrowUpRight /></button>{status && <p className="form-status" role="status">{status}</p>}</form>
+      <form className="contact-form" onSubmit={handleSubmit}><div className="form-heading"><h2>Send an enquiry</h2><p>Fields marked * are required. Your enquiry will be sent directly to CANMABiz.</p></div><div className="form-grid"><label>Name *<input name="name" autoComplete="name" maxLength="120" required /></label><label>Email *<input name="email" type="email" autoComplete="email" maxLength="254" required /></label><label>Phone<input name="phone" type="tel" autoComplete="tel" maxLength="40" /></label><label>Company<input name="company" autoComplete="organization" maxLength="120" /></label><label className="form-wide">Service required *<select name="service" required defaultValue=""><option value="" disabled>Select a service</option>{services.map((service) => <option key={service.path} value={service.title}>{service.title}</option>)}</select></label><label className="form-wide">Message *<textarea name="message" rows="5" maxLength="5000" required /></label></div><div className="contact-form-honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div><button className="button button-dark" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>{isSubmitting ? 'Sending enquiry...' : 'Prepare enquiry'} <FiArrowUpRight /></button>{status && <p className={`form-status ${statusType}`} role={statusType === 'error' ? 'alert' : 'status'}>{status}</p>}</form>
     </div></section>
   </>;
 }
@@ -1167,6 +1308,7 @@ export default function CanmaSite() {
     <Route path="/team" element={<TeamPage />} />
     <Route path="/reviews" element={<ReviewsPage />} />
     <Route path="/knowledge-hub" element={<KnowledgeHubPage />} />
+    <Route path="/working-gallery" element={<WorkingGalleryPage />} />
     <Route path="/contact" element={<ContactPage />} />
     <Route path="/privacy" element={<LegalPage isPrivacy />} />
     <Route path="/terms" element={<LegalPage isPrivacy={false} />} />

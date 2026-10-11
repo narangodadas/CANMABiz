@@ -9,6 +9,7 @@ import gemhub from '../Images/Company Logo/Gemhub.png';
 import glovil from '../Images/Company Logo/Glovil.png';
 import golderGreenPlantation from '../Images/Company Logo/Golder Green Plantation.png';
 import idiappaShop from '../Images/Company Logo/Idiappa shop.png';
+import nevaraFashion from '../Images/Company Logo/Nevara Fashion.jpeg';
 import revitavermi from '../Images/Company Logo/Revitavermi.png';
 import rsLogo from '../Images/Company Logo/RS Logo.png';
 import serendibGarments from '../Images/Company Logo/Serendib Garments.png';
@@ -27,6 +28,7 @@ export const customerLogos = [
   { name: 'Glovil', image: glovil },
   { name: 'Golder Green Plantation', image: golderGreenPlantation },
   { name: 'Idiappa shop', image: idiappaShop },
+  { name: 'Nevara Fashion', image: nevaraFashion },
   { name: 'Revitavermi', image: revitavermi },
   { name: 'RS Logo', image: rsLogo },
   { name: 'Serendib Garments', image: serendibGarments },
